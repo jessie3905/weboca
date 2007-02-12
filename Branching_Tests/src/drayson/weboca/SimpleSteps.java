@@ -14,8 +14,8 @@ public class SimpleSteps extends WizardPanelProvider {
     /** Creates a new instance of CatLoversSteps */
     public SimpleSteps() {
         super (
-            new String[] { "hairLength", "breed" }, 
-            new String[] { "Select hair length", "Choose breed" });
+            new String[] { "something", "one" }, 
+            new String[] { "Choose Something", "Choose one" });
     }
     
     protected JComponent createPanel(WizardController controller, String id, Map settings) {
