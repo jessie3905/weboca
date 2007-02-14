@@ -25,16 +25,16 @@ import drayson.weboca.gui.WelcomePanel;
  * @author Timothy Boudreau
  */
 public class InitialSteps extends WizardPanelProvider {
-    private static final String CORPUS_LOVER = "corpusLover";
-    private static final String WHICH_CORPUS = "whichCorpus";
-    private static final String STEP_0_PROBLEM = "Only people who select the box can complete this wizard";
+    private static final String APP_METHOD = "appMethod";
+    private static final String DISCLAIMER = "disclaimer";
+    private static final String STEP_0_PROBLEM = "Please agree to the disclaimer before continuing";
 
     /**
      * Creates a new instance of InitialSteps
      */
     InitialSteps () {
-        super( "New WeBoCa", new String[] { CORPUS_LOVER, WHICH_CORPUS },
-            new String[] { "Select basic preferences", "Choose something" } );
+        super( "Welcome to WeBoca", new String[] { DISCLAIMER, APP_METHOD },
+            new String[] { "Disclaimer", "Select application method" } );
     }
 
     protected JComponent createPanel (final WizardController controller,
@@ -47,7 +47,7 @@ public class InitialSteps extends WizardPanelProvider {
                 JPanel result = new JPanel(  );
                 result.setLayout( new BorderLayout(  ) );
 
-                final JCheckBox checkbox = new JCheckBox( "Please click the box" );
+                final JCheckBox checkbox = new JCheckBox( "Please check to agree to disclaimer" );
                 
                 checkbox.addActionListener( new ActionListener(  ) {
                         public void actionPerformed( ActionEvent ae ) {

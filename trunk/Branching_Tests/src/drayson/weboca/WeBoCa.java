@@ -24,26 +24,18 @@ import org.netbeans.api.wizard.WizardDisplayer;
 import org.netbeans.spi.wizard.Wizard;
 import org.netbeans.spi.wizard.WizardPage;
 import org.netbeans.spi.wizard.WizardPage.WizardResultProducer;
-
-import java.util.Map;
-import org.netbeans.spi.wizard.WizardController;
-
+import javax.swing.SwingUtilities;
 
 public class WeBoCa {
     
-    private final WizardController controller;
-    private final Map wizardData;
     
     /**
      * Creates a new instance of WeBoCa
      */
-    public WeBoCa(WizardController controller, Map wizardData) {
+    public WeBoCa() {
         
-        //initComponents();
-        this.controller = controller;
-        this.wizardData = wizardData;
-        
-        controller.setProblem("No Option Selected");
+
+
         
         // Get the native look and feel class name
         String nativeLF = UIManager.getSystemLookAndFeelClassName();
@@ -85,5 +77,17 @@ public class WeBoCa {
         //And show it onscreen
         WizardDisplayer.showWizard (wizard);
            
+    }
+    
+        /**
+     * Main Application Entry Point - Creates an instance of the WeBoCa class
+     */
+    public static void main(String[] args) {
+        
+       SwingUtilities.invokeLater(new Runnable(){
+            public void run() {
+                new WeBoCa();
+            }});
+        
     }
 }

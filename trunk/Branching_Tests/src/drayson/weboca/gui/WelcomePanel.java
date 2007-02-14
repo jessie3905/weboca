@@ -9,7 +9,6 @@
 
 package drayson.weboca.gui;
 
-import javax.swing.JRadioButton;
 import org.netbeans.spi.wizard.WizardPage;
 
 import java.util.Map;
@@ -18,25 +17,27 @@ import org.netbeans.spi.wizard.WizardController;
 
 public class WelcomePanel extends WizardPage {
     
-    public static final String userType = "type";
+    public static final String userType = "userType";
     public static final String VALUE_SIMPLE = "simple";
     public static final String VALUE_ADVANCED = "advanced";
+    public static String VALUE_CURRENT = null;
+    
+    private final WizardController controller;
+    private final Map wizardData;
     
     /**
      * Creates new form WelcomePanel used to present the user with the option of simple or advanced.
      */
     public WelcomePanel(WizardController controller, Map wizardData) {
-        // GOT TO HERE
-        
-        super("Welcome", "Welcome");               // Passes parameters to the super class
+       
         initComponents();                          // Initialises all components on the page
-        
-        //this.controller = controller;
-        //this.wizardData = wizardData;
+        System.out.println("running WelcomePanel");
+        this.controller = controller;
+        this.wizardData = wizardData;
         
         //By default, nothing is selected
         controller.setProblem("Nothing selected");
-        
+
         rdoSimple.putClientProperty (userType, VALUE_SIMPLE);
         rdoAdvanced.putClientProperty (userType, VALUE_ADVANCED);
         
@@ -62,8 +63,10 @@ public class WelcomePanel extends WizardPage {
          
     private void typeSelect(java.awt.event.ActionEvent evt) {
         JRadioButton button = (JRadioButton) evt.getSource();
+        System.out.println("button currently set to " + button.getClientProperty("userType"));
         putWizardData("userType", button.getClientProperty("userType"));
-               
+        VALUE_CURRENT = button.getClientProperty("userType").toString();
+        System.out.println("set userType to " + button.getClientProperty("userType"));       
     }
     
     /** This method is called from within the constructor to
@@ -142,7 +145,7 @@ public class WelcomePanel extends WizardPage {
         System.out.println((String)getWizardData("userType"));
         
         // Code to enable Advanced features goes below:
-        CorpusDestinationPanel.testBox.setEnabled(true);
+        //CorpusDestinationPanel.testBox.setEnabled(true);
     }//GEN-LAST:event_rdoAdvancedActionPerformed
 
     private void rdoSimpleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoSimpleActionPerformed
@@ -153,9 +156,10 @@ public class WelcomePanel extends WizardPage {
         System.out.println((String)getWizardData("userType"));
         
         // Code to disable any advanced features goes below:
-        CorpusDestinationPanel.testBox.setEnabled(false);
+        //CorpusDestinationPanel.testBox.setEnabled(false);
     }//GEN-LAST:event_rdoSimpleActionPerformed
-    
+ 
+   
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup grpBuildType;
