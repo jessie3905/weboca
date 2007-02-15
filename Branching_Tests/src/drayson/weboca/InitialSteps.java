@@ -1,18 +1,11 @@
 package drayson.weboca;
 
+import drayson.weboca.gui.DisclaimerPanel;
 import org.netbeans.spi.wizard.WizardController;
-import org.netbeans.spi.wizard.WizardException;
 import org.netbeans.spi.wizard.WizardPanelProvider;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import java.util.Map;
-
-import javax.swing.JCheckBox;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 
 import drayson.weboca.gui.WelcomePanel;
 
@@ -27,7 +20,7 @@ import drayson.weboca.gui.WelcomePanel;
 public class InitialSteps extends WizardPanelProvider {
     private static final String APP_METHOD = "appMethod";
     private static final String DISCLAIMER = "disclaimer";
-    private static final String STEP_0_PROBLEM = "Please agree to the disclaimer before continuing";
+
 
     /**
      * Creates a new instance of InitialSteps
@@ -43,26 +36,7 @@ public class InitialSteps extends WizardPanelProvider {
         switch ( indexOfStep( id ) ) {
             
             case 0 :
-
-                JPanel result = new JPanel(  );
-                result.setLayout( new BorderLayout(  ) );
-
-                final JCheckBox checkbox = new JCheckBox( "Please check to agree to disclaimer" );
-                
-                checkbox.addActionListener( new ActionListener(  ) {
-                        public void actionPerformed( ActionEvent ae ) {
-                            if ( checkbox.isSelected(  ) ) {
-                                controller.setProblem( null );
-                            } else {
-                                controller.setProblem( STEP_0_PROBLEM );
-                            }
-                        }
-                    } );
-
-                result.add ( checkbox );
-
-                controller.setProblem( STEP_0_PROBLEM );
-                return result;
+                return new DisclaimerPanel();
                 
             case 1 :
                 return new WelcomePanel(controller,data);
