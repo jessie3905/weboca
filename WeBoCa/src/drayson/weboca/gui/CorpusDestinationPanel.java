@@ -68,6 +68,8 @@ public class CorpusDestinationPanel extends WizardPage {
         putWizardData("corpusFormat", button.getClientProperty("corpusFormat"));
                
     }
+    
+
   
     
     /** This method is called from within the constructor to
@@ -135,7 +137,6 @@ public class CorpusDestinationPanel extends WizardPage {
         testBox.setSelected(true);
         testBox.setText("Some Advanced Settings");
         testBox.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        testBox.setEnabled(false);
         testBox.setMargin(new java.awt.Insets(0, 0, 0, 0));
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
@@ -154,8 +155,7 @@ public class CorpusDestinationPanel extends WizardPage {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                             .add(org.jdesktop.layout.GroupLayout.LEADING, jComboBox1, 0, 251, Short.MAX_VALUE)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, txtFilename, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-                            .add(testBox))
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, txtFilename, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(btnBrowse))
                     .add(jLabel2)
@@ -163,7 +163,8 @@ public class CorpusDestinationPanel extends WizardPage {
                         .add(10, 10, 10)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(rdoFormatVertical)
-                            .add(rdoFormatRaw))))
+                            .add(rdoFormatRaw)))
+                    .add(testBox))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -186,9 +187,9 @@ public class CorpusDestinationPanel extends WizardPage {
                 .add(rdoFormatRaw)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(rdoFormatVertical)
-                .add(46, 46, 46)
+                .add(23, 23, 23)
                 .add(testBox)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -222,7 +223,7 @@ public class CorpusDestinationPanel extends WizardPage {
     private javax.swing.JLabel lblInstruction;
     private javax.swing.JRadioButton rdoFormatRaw;
     private javax.swing.JRadioButton rdoFormatVertical;
-    public static javax.swing.JCheckBox testBox;
+    private javax.swing.JCheckBox testBox;
     private javax.swing.JTextField txtFilename;
     // End of variables declaration//GEN-END:variables
     

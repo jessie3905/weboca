@@ -20,6 +20,7 @@ public class WelcomePanel extends WizardPage {
     public static final String userType = "userType";
     public static final String VALUE_SIMPLE = "simple";
     public static final String VALUE_ADVANCED = "advanced";
+    public static final String VALUE_MODIFY = "modify";
     public static String VALUE_CURRENT = null;
     
     private final WizardController controller;
@@ -40,6 +41,7 @@ public class WelcomePanel extends WizardPage {
 
         rdoSimple.putClientProperty (userType, VALUE_SIMPLE);
         rdoAdvanced.putClientProperty (userType, VALUE_ADVANCED);
+        rdoModify.putClientProperty(userType, VALUE_MODIFY);
         
         
       
@@ -81,13 +83,14 @@ public class WelcomePanel extends WizardPage {
         jLabel2 = new javax.swing.JLabel();
         rdoSimple = new javax.swing.JRadioButton();
         rdoAdvanced = new javax.swing.JRadioButton();
+        rdoModify = new javax.swing.JRadioButton();
 
         jLabel1.setText("Welcome to WeBoCa v0.1..");
 
         jLabel2.setText("Select build type:");
 
         grpBuildType.add(rdoSimple);
-        rdoSimple.setText("Simple");
+        rdoSimple.setText("Just create a corpus");
         rdoSimple.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         rdoSimple.setMargin(new java.awt.Insets(0, 0, 0, 0));
         rdoSimple.addActionListener(new java.awt.event.ActionListener() {
@@ -97,12 +100,22 @@ public class WelcomePanel extends WizardPage {
         });
 
         grpBuildType.add(rdoAdvanced);
-        rdoAdvanced.setText("Advanced");
+        rdoAdvanced.setText("Create a corpus and process it");
         rdoAdvanced.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         rdoAdvanced.setMargin(new java.awt.Insets(0, 0, 0, 0));
         rdoAdvanced.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rdoAdvancedActionPerformed(evt);
+            }
+        });
+
+        grpBuildType.add(rdoModify);
+        rdoModify.setText("Process an existing corpus");
+        rdoModify.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        rdoModify.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        rdoModify.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdoModifyActionPerformed(evt);
             }
         });
 
@@ -119,8 +132,9 @@ public class WelcomePanel extends WizardPage {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(rdoAdvanced)
-                            .add(rdoSimple))))
-                .addContainerGap(236, Short.MAX_VALUE))
+                            .add(rdoSimple)
+                            .add(rdoModify))))
+                .addContainerGap(136, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -134,9 +148,20 @@ public class WelcomePanel extends WizardPage {
                         .add(rdoSimple)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(rdoAdvanced)))
-                .addContainerGap(210, Short.MAX_VALUE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(rdoModify)
+                .addContainerGap(189, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void rdoModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoModifyActionPerformed
+        System.out.println("Setting Action Event to MODIFY");
+        typeSelect(evt);
+        System.out.println("MODIFY SET, testing...");
+        System.out.println((String)getWizardData("userType"));
+        
+        // Code to enable Advanced features goes below:
+    }//GEN-LAST:event_rdoModifyActionPerformed
 
     private void rdoAdvancedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoAdvancedActionPerformed
         System.out.println("Setting Action Event to ADVANCED");
@@ -145,7 +170,7 @@ public class WelcomePanel extends WizardPage {
         System.out.println((String)getWizardData("userType"));
         
         // Code to enable Advanced features goes below:
-        //CorpusDestinationPanel.testBox.setEnabled(true);
+        
     }//GEN-LAST:event_rdoAdvancedActionPerformed
 
     private void rdoSimpleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoSimpleActionPerformed
@@ -166,6 +191,7 @@ public class WelcomePanel extends WizardPage {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JRadioButton rdoAdvanced;
+    public javax.swing.JRadioButton rdoModify;
     public javax.swing.JRadioButton rdoSimple;
     // End of variables declaration//GEN-END:variables
     

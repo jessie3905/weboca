@@ -50,9 +50,14 @@ public class NewWeBoCaWizard extends WizardBranchController {
         
         if (WelcomePanel.VALUE_CURRENT == "simple") {
             return getSimpleSteps();
-        } else if (WelcomePanel.VALUE_CURRENT == "advanced") {
+        } 
+        else if (WelcomePanel.VALUE_CURRENT == "advanced") {
             return getAdvancedSteps();
-        } else {
+        } 
+        else if (WelcomePanel.VALUE_CURRENT == "modify") {
+            return getModifySteps();
+        } 
+        else {
             return null;
         }
     }
@@ -71,8 +76,16 @@ public class NewWeBoCaWizard extends WizardBranchController {
         return advancedSteps;
     }
     
+   private WizardPanelProvider getModifySteps() {
+        if (modifySteps == null) {
+            modifySteps = new ModifySteps();
+        }
+        return modifySteps;
+    }
+    
     private SimpleSteps simpleSteps = null;
     private AdvancedSteps advancedSteps = null;
+    private ModifySteps modifySteps = null;
     
     
     
