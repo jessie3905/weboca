@@ -89,7 +89,6 @@ public class CorpusDestinationPanel extends WizardPage {
         rdoFormatRaw = new javax.swing.JRadioButton();
         jLabel2 = new javax.swing.JLabel();
         rdoFormatVertical = new javax.swing.JRadioButton();
-        testBox = new javax.swing.JCheckBox();
 
         lblFilename.setText("Filename");
 
@@ -134,11 +133,6 @@ public class CorpusDestinationPanel extends WizardPage {
             }
         });
 
-        testBox.setSelected(true);
-        testBox.setText("Some Advanced Settings");
-        testBox.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        testBox.setMargin(new java.awt.Insets(0, 0, 0, 0));
-
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -163,8 +157,7 @@ public class CorpusDestinationPanel extends WizardPage {
                         .add(10, 10, 10)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(rdoFormatVertical)
-                            .add(rdoFormatRaw)))
-                    .add(testBox))
+                            .add(rdoFormatRaw))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -187,9 +180,7 @@ public class CorpusDestinationPanel extends WizardPage {
                 .add(rdoFormatRaw)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(rdoFormatVertical)
-                .add(23, 23, 23)
-                .add(testBox)
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addContainerGap(145, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -223,7 +214,6 @@ public class CorpusDestinationPanel extends WizardPage {
     private javax.swing.JLabel lblInstruction;
     private javax.swing.JRadioButton rdoFormatRaw;
     private javax.swing.JRadioButton rdoFormatVertical;
-    private javax.swing.JCheckBox testBox;
     private javax.swing.JTextField txtFilename;
     // End of variables declaration//GEN-END:variables
     

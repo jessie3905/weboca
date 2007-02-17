@@ -14,8 +14,8 @@ public class SimpleSteps extends WizardPanelProvider {
     /** Creates a new instance of SimpleSteps */
     public SimpleSteps() {
         super (
-            new String[] { "Corpus Destination", "Seeds", "Tuples", "Search Engines", "Search Results", "Download Corpus", "Summary" },
-            new String[] { "Choose Corpus Destination", "Specify seed terms", "Generate tuples", "Search Engines", "Search Results", "Download Corpus", "Summary" });
+            new String[] { "Corpus Destination", "Seeds", "Tuples", "Search Engines", "PreAdvancedPanel", "Search Results", "Download Corpus", "Summary" },
+            new String[] { "Choose Corpus Destination", "Specify seed terms", "Generate tuples", "Search Engines", "Advanced Options", "Search Results", "Download Corpus", "Summary" });
     }
     
     protected JComponent createPanel(WizardController controller, String id, Map settings) {
@@ -31,14 +31,17 @@ public class SimpleSteps extends WizardPanelProvider {
                 
             case 3 :
                 return new SearchEngineConfigPanel();
-                
+            
             case 4 :
-                return new SearchResultsPanel();
+                return new PreAdvancedPanel();
                 
             case 5 :
-                return new SearchDownloadPanel();
+                return new SearchResultsPanel();
                 
             case 6 :
+                return new SearchDownloadPanel();
+                
+            case 7 :
                 return new SummaryPanel();
                 
             default :

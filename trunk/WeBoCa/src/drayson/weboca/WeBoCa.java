@@ -16,7 +16,7 @@ import drayson.weboca.gui.SearchResultsPanel;
 import drayson.weboca.gui.SeedPanel;
 import drayson.weboca.gui.SummaryPanel;
 import drayson.weboca.gui.TuplePanel;
-import drayson.weboca.gui.DisclaimerPanel;
+import drayson.weboca.gui.PreAdvancedPanel;
 import drayson.weboca.gui.WelcomePanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -60,7 +60,7 @@ public class WeBoCa {
         
         // Create a list of Wizard Pages in the order they are to exist within the Wizard
         WizardPage[] wpages = new WizardPage[] {
-                new DisclaimerPanel(),
+                new PreAdvancedPanel(),
                 //new WelcomePanel(),
                 new CorpusDestinationPanel(),
                 new SeedPanel(),
