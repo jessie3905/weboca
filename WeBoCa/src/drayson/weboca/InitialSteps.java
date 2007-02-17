@@ -26,7 +26,7 @@ public class InitialSteps extends WizardPanelProvider {
      * Creates a new instance of InitialSteps
      */
     InitialSteps () {
-        super( "Welcome to WeBoca", new String[] { DISCLAIMER, APP_METHOD },
+        super( "Welcome to WeBoCa...", new String[] { DISCLAIMER, APP_METHOD },
             new String[] { "Disclaimer", "Select application method" } );
     }
 

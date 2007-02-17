@@ -16,6 +16,7 @@ import com.google.soap.search.GoogleSearchResultElement;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  *
  * @author Andy
@@ -24,27 +25,35 @@ public class GoogleSearchEngine implements SearchEngine {
     
     protected GoogleSearch googleSearch;
     protected String key;
+    protected String additionalParams;
     
     /** Creates a new instance of GoogleSearch */
     public GoogleSearchEngine() {
         googleSearch = new GoogleSearch();
     }
     
-    public GoogleSearchEngine(String key) {
+    public GoogleSearchEngine(String key, String addParams) {
         googleSearch = new GoogleSearch();
         setKey(key);
+        this.additionalParams = addParams;
+        // Pad out the additional params
+        additionalParams = " " + additionalParams + " ";
+        System.out.println("Set Params Within GoogleSearchEngine as " + additionalParams);
     }
     
     public void setKey(String key) {
         this.key = key;
         googleSearch.setKey(this.key);
     }
+    
 
     public List<SearchResult> doSearch(String query) {
+
         
         String filetypeExclusion = "-filetype:doc -filetype:pdf -filetype:ps -filetype:rtf -filetype:ppt -filetype:xls ";
-        
-        googleSearch.setQueryString(filetypeExclusion + query);
+       
+        // Ensure that the filetypeExclusions, the additional Params and the query are queried!
+        googleSearch.setQueryString(filetypeExclusion + additionalParams + query);
         GoogleSearchResult googleResult = null;
         try {
             googleResult = googleSearch.doSearch();

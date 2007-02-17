@@ -46,19 +46,9 @@ public class SearchResultsPanel extends WizardPage {
         super("Search Results", "Search Results");
         initComponents();
         checkListManager = new CheckListManager(lstResults);
-        
-        //testCellRenderer();
     }
     
-    /*private void testCellRenderer() {
-        
-        DefaultListModel model = (DefaultListModel)lstResults.getModel();
-        SearchResult sr = new SearchResult("<html><b>title1</b>", "http://www.andy-roberts.net");
-        model.addElement(sr);
-        sr = new SearchResult("another title", "http://www.java.net");
-        model.addElement(sr);
-    }
-    */
+
     public static String getDescription() {
         
         return "Search Results";
@@ -196,7 +186,7 @@ public class SearchResultsPanel extends WizardPage {
                 
                 tuples = Arrays.asList(tupleString.split("\n"));
                 
-                WebSearch search = new WebSearch(new GoogleSearchEngine((String)getWizardData("txtKey")));
+                WebSearch search = new WebSearch(new GoogleSearchEngine((String)getWizardData("txtKey"), (String)getWizardData("AdditionalParam")));
                 
                 for (String t: tuples) {
                     //System.out.println("Searching for tuple: \"" + t + "\"...");

@@ -87,10 +87,10 @@ public class WelcomePanel extends WizardPage {
 
         jLabel1.setText("Welcome to WeBoCa v0.1..");
 
-        jLabel2.setText("Select build type:");
+        jLabel2.setText("I would like to...  ");
 
         grpBuildType.add(rdoSimple);
-        rdoSimple.setText("Just create a corpus");
+        rdoSimple.setText("Create a corpus");
         rdoSimple.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         rdoSimple.setMargin(new java.awt.Insets(0, 0, 0, 0));
         rdoSimple.addActionListener(new java.awt.event.ActionListener() {
@@ -134,7 +134,7 @@ public class WelcomePanel extends WizardPage {
                             .add(rdoAdvanced)
                             .add(rdoSimple)
                             .add(rdoModify))))
-                .addContainerGap(136, Short.MAX_VALUE))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -142,12 +142,11 @@ public class WelcomePanel extends WizardPage {
                 .addContainerGap()
                 .add(jLabel1)
                 .add(29, 29, 29)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jLabel2)
-                    .add(layout.createSequentialGroup()
-                        .add(rdoSimple)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(rdoAdvanced)))
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(rdoSimple)
+                    .add(jLabel2))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(rdoAdvanced)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(rdoModify)
                 .addContainerGap(189, Short.MAX_VALUE))

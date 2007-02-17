@@ -48,11 +48,10 @@ public class SearchEngineConfigPanel extends WizardPage {
         txtKey = new javax.swing.JTextField();
 
         lstSearchEngines.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Google" };
+            String[] strings = { "Google", "Yahoo" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        lstSearchEngines.setSelectedIndex(0);
         CheckListManager checkListManager = new CheckListManager(lstSearchEngines);
         checkListManager.checkAll();
         jScrollPane1.setViewportView(lstSearchEngines);
