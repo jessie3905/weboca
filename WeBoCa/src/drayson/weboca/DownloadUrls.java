@@ -19,9 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
-import java.io.Writer;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import org.jdesktop.swingworker.SwingWorker;
@@ -40,12 +38,17 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
 
     private DownloadStatus downloadStatus;
     
-    public DownloadUrls(List<String> urls, String corpusOutputFilename, String format) {
+    private int WordCount;
+    private int customSize;
+    
+    public DownloadUrls(List<String> urls, String corpusOutputFilename, String format, int WordCount, int customSize) {
     
         this.format = format;
         this.corpusOutputFilename = corpusOutputFilename;
         this.urls = urls;
         downloadStatus = new DownloadStatus();
+        this.WordCount = WordCount;
+        this.customSize = customSize;
     
     }
 
@@ -53,7 +56,44 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
         return ((float) downloaded / size) * 100;
     }
      
+    private int getWords()
+    {
+        int words;
+                
+        if (WordCount != 0)
+        {
+            words = WordCount;
+            return words;
+        }
+        else
+        {
+            words = downloadStatus.getNumWords() + 1;
+            return words;
+        }
+    }
+    
+    private int getSize()
+    {
+        int size;
+        if (customSize != 0)
+        {
+            size = customSize;
+            return size;
+        }
+        else
+        {
+            size = 1;
+            return size;
+        }    
+    }
+    
     protected Integer doInBackground() throws Exception {
+        
+        int words = getWords();
+        
+        // Ensure that the program stops when the defined number of words has been met
+        while (downloadStatus.getNumWords() < words)
+        {
         
         RandomAccessFile file = null;
         InputStream stream = null;
@@ -102,20 +142,30 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
                     throw new Exception("Invalid response code");
                 }
                 
-                // Check for valid content length.
+                int customsize = getSize();
+                
+                // Check for valid size of the page to be downloaded - in OCTETS - (the number of bytes!)                         
                 int contentLength = connection.getContentLength();
-                if (contentLength < 1) {
-                    
+                System.out.print(connection.getURL());
+                int localSize = getSize();
+                if (contentLength < localSize) 
+                {
+                    System.out.println("Oh no! The max size of the page is:");
+                    System.out.println(getSize());
+                    System.out.println("And this page is:");
+                    System.out.println(contentLength);
                     throw new Exception("Invalid content length");
                 }
-                
+                System.out.println("This time it's:");
+                System.out.println(contentLength);
                 /* Set the size for this download if it hasn't been already set. */
                 if (size == -1) {
                     size = contentLength;
                     
                 }
                 
-                if (!HTMLUtils.isValidSize(size)) {
+                // used to be size
+                if (!HTMLUtils.isValidSize(localSize)) {
                     downloadStatus.setNumInvalid(downloadStatus.getNumInvalid()+1);
                     continue;
                 }
@@ -255,8 +305,10 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
             firePropertyChange("status", null, downloadStatus);
         } // end for loop
         writer.close();
+        }
         return Integer.valueOf(DownloadStatus.COMPLETE);
     }
+    
 
     public String getFileName(URL url) {
         String fileName = url.getFile();

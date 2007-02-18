@@ -15,11 +15,11 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="prgCurrent" alignment="0" pref="387" max="32767" attributes="1"/>
+                  <Component id="prgCurrent" alignment="0" pref="392" max="32767" attributes="1"/>
                   <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="256" max="32767" attributes="0"/>
+                      <EmptySpace pref="258" max="32767" attributes="0"/>
                       <Component id="lblStatus" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -41,11 +41,11 @@
                           <Component id="lblCurrentCorpusSize" alignment="0" pref="278" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="prgOverall" alignment="0" pref="387" max="32767" attributes="1"/>
-                  <Component id="jSeparator1" alignment="0" pref="387" max="32767" attributes="0"/>
+                  <Component id="prgOverall" alignment="0" pref="392" max="32767" attributes="1"/>
+                  <Component id="jSeparator1" alignment="0" pref="392" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="96" max="32767" attributes="0"/>
+                      <EmptySpace pref="97" max="32767" attributes="0"/>
                       <Component id="btnDownload" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>

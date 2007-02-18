@@ -9,6 +9,7 @@
 
 package drayson.weboca.gui;
 
+import java.awt.Component;
 import org.netbeans.spi.wizard.WizardPage;
 
 import java.util.Map;
@@ -63,6 +64,24 @@ public class WelcomePanel extends WizardPage {
     }
     
          
+   /**
+     * Validates the JTextBox confirmBox to ensure that the user has agreed to the disclaimer
+     *
+     * @param component The component
+     * @param o The object
+     * @return The error presented by the Wizard framework if the condition isn't met
+     */
+    protected String validateContents (Component component, Object o) {
+    
+        if (!rdoSimple.isSelected() && !rdoAdvanced.isSelected() && !rdoModify.isSelected() ) {
+            return "Please choose an application method before continuing.";
+        }
+        
+        return null;
+    }
+    
+    
+    
     private void typeSelect(java.awt.event.ActionEvent evt) {
         JRadioButton button = (JRadioButton) evt.getSource();
         System.out.println("button currently set to " + button.getClientProperty("userType"));

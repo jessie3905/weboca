@@ -53,6 +53,7 @@ public class PreAdvancedPanel extends WizardPage {
             putWizardData("PreAdvancedChosen", "false");
             searchParams.setEnabled(false);
             corpusSize.setEnabled(false);
+            pageSize.setEnabled(false);
         }
         
         if (advancedBox.isSelected() == true)
@@ -63,6 +64,7 @@ public class PreAdvancedPanel extends WizardPage {
             putWizardData("saved", "false");
             searchParams.setEnabled(true);
             corpusSize.setEnabled(true);
+            pageSize.setEnabled(true);
         }
     }
 
@@ -106,6 +108,9 @@ public class PreAdvancedPanel extends WizardPage {
         corpusSize = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
+        jLabel4 = new javax.swing.JLabel();
+        pageSize = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
 
         advancedBox.setText("Enable Advanced Options");
         advancedBox.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -141,7 +146,18 @@ public class PreAdvancedPanel extends WizardPage {
             }
         });
 
-        jLabel3.setText(" words           (leave blank for unlimited)");
+        jLabel3.setText(" words                       (blank = unlimited)");
+
+        jLabel4.setText("Limit the page size to ");
+
+        pageSize.setEnabled(false);
+        pageSize.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                pageSizeFocusLost(evt);
+            }
+        });
+
+        jLabel5.setText(" bytes                   (blank = unlimited)");
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -166,7 +182,13 @@ public class PreAdvancedPanel extends WizardPage {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jLabel3))
                     .add(jSeparator1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 381, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jSeparator3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE))
+                    .add(jSeparator3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
+                    .add(layout.createSequentialGroup()
+                        .add(jLabel4)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(pageSize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 93, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jLabel5)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -191,9 +213,19 @@ public class PreAdvancedPanel extends WizardPage {
                     .add(corpusSize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(14, 14, 14)
                 .add(jSeparator3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jLabel4)
+                    .add(pageSize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel5))
+                .addContainerGap(128, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void pageSizeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pageSizeFocusLost
+       // Reset the state "saved" in the wizard to false
+       putWizardData("saved", "false");
+    }//GEN-LAST:event_pageSizeFocusLost
 
     private void corpusSizeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_corpusSizeFocusLost
        // Reset the state "saved" in the wizard to false
@@ -210,8 +242,39 @@ public class PreAdvancedPanel extends WizardPage {
         putWizardData("saved", "true");
         
         // Additional commands to save the state of all the additional options
-        putWizardData("AdditionalParam", searchParams.getText());
-        System.out.println("Saved " + searchParams.getText() + " to AdditionalParam");
+        
+        if (searchParams.getText().length() !=0)
+        {
+             putWizardData("AdditionalParam", searchParams.getText());
+             System.out.println("Saved " + getWizardData("AdditionalParam") + " to AdditionalParam");
+        }
+
+        if (searchParams.getText().length() == 0)
+        {
+            putWizardData("AdditionalParam", " ");
+            System.out.println("Saved an empty space to AdditionalParam");
+        }
+        
+        if (corpusSize.getText().length() != 0)
+        {
+            putWizardData("WordLimit", corpusSize.getText());
+            System.out.println("Saved " + getWizardData("WordLimit") + " to WordLimit");
+        }
+        else
+        {
+            putWizardData("WordLimit", "0");
+        }
+        
+        if (pageSize.getText().length() != 0)
+        {
+            putWizardData("PageSize", pageSize.getText());
+            System.out.println("Saved " + getWizardData("PageSize") + " to PageSize");
+        }
+        else
+        {
+            putWizardData("PageSize", "0");
+        }
+
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void actionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionPerformed
@@ -226,9 +289,12 @@ public class PreAdvancedPanel extends WizardPage {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JTextField pageSize;
     private javax.swing.JButton saveButton;
     private javax.swing.JTextField searchParams;
     // End of variables declaration//GEN-END:variables

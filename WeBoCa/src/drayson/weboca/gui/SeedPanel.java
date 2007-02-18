@@ -76,15 +76,16 @@ public class SeedPanel extends WizardPage {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtSeeds = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
 
-        btnLoad.setText("Load");
+        btnLoad.setText("Load custom");
         btnLoad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoadActionPerformed(evt);
             }
         });
 
-        btnSave.setText("Save");
+        btnSave.setText("Save custom");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveActionPerformed(evt);
@@ -99,6 +100,8 @@ public class SeedPanel extends WizardPage {
         //txtSeeds.setText("arabic\nconcordance\nlanguage\nlearning\ncluster");
         jScrollPane1.setViewportView(txtSeeds);
 
+        jButton1.setText("Load golden list");
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -110,7 +113,9 @@ public class SeedPanel extends WizardPage {
                     .add(layout.createSequentialGroup()
                         .add(btnLoad)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(btnSave))
+                        .add(btnSave)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 85, Short.MAX_VALUE)
+                        .add(jButton1))
                     .add(jLabel1))
                 .addContainerGap())
         );
@@ -124,7 +129,8 @@ public class SeedPanel extends WizardPage {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(btnLoad)
-                    .add(btnSave))
+                    .add(btnSave)
+                    .add(jButton1))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -164,6 +170,7 @@ public class SeedPanel extends WizardPage {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLoad;
     private javax.swing.JButton btnSave;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     protected javax.swing.JTextArea txtSeeds;

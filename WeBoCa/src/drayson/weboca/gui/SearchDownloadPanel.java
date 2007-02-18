@@ -8,38 +8,23 @@ package drayson.weboca.gui;
 
 import drayson.weboca.DownloadStatus;
 import drayson.weboca.DownloadUrls;
-import drayson.weboca.HTMLUtils;
 import drayson.weboca.Utils;
 import drayson.weboca.search.SearchResult;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.io.RandomAccessFile;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
-import javax.swing.JProgressBar;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import org.jdesktop.swingworker.SwingWorker;
 import org.netbeans.spi.wizard.WizardController;
 import org.netbeans.spi.wizard.WizardPage;
+import java.lang.Object;
 
 /**
  *
@@ -232,14 +217,17 @@ public class SearchDownloadPanel extends WizardPage {
         JList resultsList = (JList) this.getWizardData("listResults");
         CheckListManager manager = (CheckListManager) this.getWizardData("checkManager");
         DefaultListSelectionModel listModel = (DefaultListSelectionModel) manager.getSelectionModel();
-                 
+        
+        // Run through the list of search results and add any URLS that were selected to the "selectedFiles" String list
         for (int idex=0; idex < resultsList.getModel().getSize(); idex++) {
             if (listModel.isSelectedIndex(idex)) {
                 selectedFiles.add(searchResultsList.get(idex).getUrl());
                 
             }
         }
-                
+        
+        
+        // not sure what this does - something to do with increasing the overall progress bar when user input is recieved
         prgOverall.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 
@@ -248,8 +236,9 @@ public class SearchDownloadPanel extends WizardPage {
             
         });
         
-        
+        // set the maximum of the overall progress bar to the length of the selected files
         prgOverall.setMaximum(selectedFiles.size() * 100);
+        
         final StringBuffer sb = new StringBuffer();
         
         String corpusFilename = (String)this.getWizardData("txtFilename");
@@ -257,8 +246,18 @@ public class SearchDownloadPanel extends WizardPage {
         String corpusFormat = (String)this.getWizardData("corpusFormat");
         
         System.out.println("Format: " + corpusFormat);
-               
-        final DownloadUrls worker = new DownloadUrls(selectedFiles, corpusFilename, corpusFormat) {
+        
+        int WordCount = Integer.parseInt(getWizardData("WordLimit").toString());      
+        System.out.println("WordCount in SearchDownloadPanel has been set to:");
+        System.out.println(WordCount);
+        
+        int customSize = Integer.parseInt(getWizardData("PageSize").toString());
+        System.out.println("PageSize in SearchDownloadPanel has been set to:");
+        System.out.println(customSize);
+        
+        // This class downloads the content from the URLs
+        final DownloadUrls worker = new DownloadUrls(selectedFiles, corpusFilename, corpusFormat, WordCount, customSize) 
+        {
             protected void done() {
          
                 downloadComplete = true;
