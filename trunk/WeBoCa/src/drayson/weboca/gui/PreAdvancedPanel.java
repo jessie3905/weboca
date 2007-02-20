@@ -51,9 +51,16 @@ public class PreAdvancedPanel extends WizardPage {
         if (advancedBox.isSelected() == false)
         {
             putWizardData("PreAdvancedChosen", "false");
+            saveButton.setEnabled(false);
             searchParams.setEnabled(false);
             corpusSize.setEnabled(false);
             pageSize.setEnabled(false);
+            corpusSizeLabel.setEnabled(false);
+            corpusSizeLabel2.setEnabled(false);
+            pageSizeLabel.setEnabled(false);
+            pageSizeLabel2.setEnabled(false);
+            paramLabel.setEnabled(false);
+            
         }
         
         if (advancedBox.isSelected() == true)
@@ -62,9 +69,15 @@ public class PreAdvancedPanel extends WizardPage {
             
             // Reset the state "saved" in the wizard to false
             putWizardData("saved", "false");
+            saveButton.setEnabled(true);
             searchParams.setEnabled(true);
             corpusSize.setEnabled(true);
             pageSize.setEnabled(true);
+            corpusSizeLabel.setEnabled(true);
+            corpusSizeLabel2.setEnabled(true);
+            pageSizeLabel.setEnabled(true);
+            pageSizeLabel2.setEnabled(true);
+            paramLabel.setEnabled(true);
         }
     }
 
@@ -97,20 +110,21 @@ public class PreAdvancedPanel extends WizardPage {
      */
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
-        grpBuildType = new javax.swing.ButtonGroup();
         advancedBox = new javax.swing.JCheckBox();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel1 = new javax.swing.JLabel();
+        paramLabel = new javax.swing.JLabel();
         searchParams = new javax.swing.JTextField();
         saveButton = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel2 = new javax.swing.JLabel();
+        corpusSizeLabel2 = new javax.swing.JLabel();
         corpusSize = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        corpusSizeLabel = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
-        jLabel4 = new javax.swing.JLabel();
+        pageSizeLabel2 = new javax.swing.JLabel();
         pageSize = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        pageSizeLabel = new javax.swing.JLabel();
+        jSeparator4 = new javax.swing.JSeparator();
+        jSeparator5 = new javax.swing.JSeparator();
 
         advancedBox.setText("Enable Advanced Options");
         advancedBox.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -121,7 +135,8 @@ public class PreAdvancedPanel extends WizardPage {
             }
         });
 
-        jLabel1.setText("Additional search parameters");
+        paramLabel.setText("Additional search parameters");
+        paramLabel.setEnabled(false);
 
         searchParams.setEnabled(false);
         searchParams.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -131,13 +146,15 @@ public class PreAdvancedPanel extends WizardPage {
         });
 
         saveButton.setText("Save Settings!");
+        saveButton.setEnabled(false);
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveButtonActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Limit the corpus size to ");
+        corpusSizeLabel2.setText("Limit the corpus size to ");
+        corpusSizeLabel2.setEnabled(false);
 
         corpusSize.setEnabled(false);
         corpusSize.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -146,9 +163,11 @@ public class PreAdvancedPanel extends WizardPage {
             }
         });
 
-        jLabel3.setText(" words                       (blank = unlimited)");
+        corpusSizeLabel.setText(" words                         (blank = unlimited)");
+        corpusSizeLabel.setEnabled(false);
 
-        jLabel4.setText("Limit the page size to ");
+        pageSizeLabel2.setText("Limit the page size to ");
+        pageSizeLabel2.setEnabled(false);
 
         pageSize.setEnabled(false);
         pageSize.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -157,7 +176,8 @@ public class PreAdvancedPanel extends WizardPage {
             }
         });
 
-        jLabel5.setText(" bytes                   (blank = unlimited)");
+        pageSizeLabel.setText(" bytes                     (blank = unlimited)");
+        pageSizeLabel.setEnabled(false);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -166,29 +186,33 @@ public class PreAdvancedPanel extends WizardPage {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jSeparator2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 381, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jSeparator5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
+                    .add(jSeparator4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                        .add(org.jdesktop.layout.GroupLayout.LEADING, jSeparator3)
+                        .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
+                            .add(pageSizeLabel2)
+                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                            .add(pageSize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 93, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                            .add(pageSizeLabel)))
+                    .add(layout.createSequentialGroup()
+                        .add(paramLabel)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 28, Short.MAX_VALUE)
+                        .add(searchParams, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 219, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                        .add(org.jdesktop.layout.GroupLayout.LEADING, jSeparator1)
+                        .add(org.jdesktop.layout.GroupLayout.LEADING, jSeparator2)
+                        .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
+                            .add(corpusSizeLabel2)
+                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                            .add(corpusSize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 71, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                            .add(corpusSizeLabel)))
                     .add(layout.createSequentialGroup()
                         .add(advancedBox)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 139, Short.MAX_VALUE)
-                        .add(saveButton))
-                    .add(layout.createSequentialGroup()
-                        .add(jLabel1)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 14, Short.MAX_VALUE)
-                        .add(searchParams, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 229, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(layout.createSequentialGroup()
-                        .add(jLabel2)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(corpusSize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 71, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jLabel3))
-                    .add(jSeparator1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 381, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jSeparator3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
-                    .add(layout.createSequentialGroup()
-                        .add(jLabel4)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(pageSize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 93, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jLabel5)))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 143, Short.MAX_VALUE)
+                        .add(saveButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -202,23 +226,27 @@ public class PreAdvancedPanel extends WizardPage {
                 .add(jSeparator1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel1)
+                    .add(paramLabel)
                     .add(searchParams, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(14, 14, 14)
-                .add(jSeparator2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(14, 14, 14)
+                .add(jSeparator2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel2)
-                    .add(jLabel3)
+                    .add(corpusSizeLabel2)
+                    .add(corpusSizeLabel)
                     .add(corpusSize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(14, 14, 14)
                 .add(jSeparator3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel4)
+                    .add(pageSizeLabel2)
                     .add(pageSize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel5))
-                .addContainerGap(128, Short.MAX_VALUE))
+                    .add(pageSizeLabel))
+                .add(14, 14, 14)
+                .add(jSeparator5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(59, 59, 59)
+                .add(jSeparator4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -285,16 +313,17 @@ public class PreAdvancedPanel extends WizardPage {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox advancedBox;
     private javax.swing.JTextField corpusSize;
-    private javax.swing.ButtonGroup grpBuildType;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel corpusSizeLabel;
+    private javax.swing.JLabel corpusSizeLabel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JTextField pageSize;
+    private javax.swing.JLabel pageSizeLabel;
+    private javax.swing.JLabel pageSizeLabel2;
+    private javax.swing.JLabel paramLabel;
     private javax.swing.JButton saveButton;
     private javax.swing.JTextField searchParams;
     // End of variables declaration//GEN-END:variables
