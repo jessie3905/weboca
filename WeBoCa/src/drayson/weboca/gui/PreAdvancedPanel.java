@@ -29,6 +29,11 @@ public class PreAdvancedPanel extends WizardPage {
         
         // Set the state "AdditionalParam" in the wizard to empty
         putWizardData("AdditionalParam", "");
+        
+        // Set the other states
+        putWizardData("WordLimit", "0");
+        putWizardData("PageSize", "0");
+        putWizardData("Advanced", "false");
     }
     
     /**
@@ -60,7 +65,7 @@ public class PreAdvancedPanel extends WizardPage {
             pageSizeLabel.setEnabled(false);
             pageSizeLabel2.setEnabled(false);
             paramLabel.setEnabled(false);
-            
+            putWizardData("Advanced", "false");
         }
         
         if (advancedBox.isSelected() == true)
@@ -78,6 +83,7 @@ public class PreAdvancedPanel extends WizardPage {
             pageSizeLabel.setEnabled(true);
             pageSizeLabel2.setEnabled(true);
             paramLabel.setEnabled(true);
+            putWizardData("Advanced", "true");
         }
     }
 
@@ -186,16 +192,7 @@ public class PreAdvancedPanel extends WizardPage {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jSeparator5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
                     .add(jSeparator4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
-                        .add(org.jdesktop.layout.GroupLayout.LEADING, jSeparator3)
-                        .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
-                            .add(pageSizeLabel2)
-                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                            .add(pageSize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 93, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                            .add(pageSizeLabel)))
                     .add(layout.createSequentialGroup()
                         .add(paramLabel)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 28, Short.MAX_VALUE)
@@ -212,7 +209,16 @@ public class PreAdvancedPanel extends WizardPage {
                     .add(layout.createSequentialGroup()
                         .add(advancedBox)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 143, Short.MAX_VALUE)
-                        .add(saveButton)))
+                        .add(saveButton))
+                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                        .add(org.jdesktop.layout.GroupLayout.LEADING, jSeparator3)
+                        .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
+                            .add(pageSizeLabel2)
+                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                            .add(pageSize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 93, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                            .add(pageSizeLabel)))
+                    .add(jSeparator5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -290,6 +296,7 @@ public class PreAdvancedPanel extends WizardPage {
         }
         else
         {
+            System.out.println("Saved 0 to WordLimit");
             putWizardData("WordLimit", "0");
         }
         
@@ -301,7 +308,10 @@ public class PreAdvancedPanel extends WizardPage {
         else
         {
             putWizardData("PageSize", "0");
+            System.out.println("Saved " + getWizardData("PageSize") + " to PageSize");
         }
+        
+        
 
     }//GEN-LAST:event_saveButtonActionPerformed
 

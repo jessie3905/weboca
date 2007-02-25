@@ -24,7 +24,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.netbeans.spi.wizard.WizardController;
 import org.netbeans.spi.wizard.WizardPage;
-import java.lang.Object;
 
 /**
  *
@@ -32,6 +31,7 @@ import java.lang.Object;
  */
 public class SearchDownloadPanel extends WizardPage {
     boolean downloadComplete = false;
+
     /** Creates new form SearchDownloadPanel */
     public SearchDownloadPanel() {
         super("Download Corpus", "Download Corpus");
@@ -43,13 +43,18 @@ public class SearchDownloadPanel extends WizardPage {
         return "Download Corpus";
     }
     
-    protected String validateContents (Component component, Object o) {
+    protected String validateContents (Component component, Object o) 
+    {
+        if (lblStatus.getText() != "Complete")
+        {
+          return "Must select Download to proceed.";
+        }
         
-        if (prgOverall.getValue() != prgOverall.getMaximum()) {
-            return "Must select Download to proceed.";
-        } else {
+        else
+        {     
             return null;
         }
+
     }
     
     /** This method is called from within the constructor to
@@ -86,7 +91,7 @@ public class SearchDownloadPanel extends WizardPage {
             }
         });
 
-        jLabel1.setText("Overall Progress");
+        jLabel1.setText("Overall Progress (all URLs)");
 
         lblWordCount.setText("0");
         lblWordCount.setName("lblWordCount");
@@ -127,11 +132,11 @@ public class SearchDownloadPanel extends WizardPage {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(prgCurrent, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
+                    .add(prgCurrent, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
                     .add(jLabel1)
                     .add(layout.createSequentialGroup()
                         .add(jLabel4)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 253, Short.MAX_VALUE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 258, Short.MAX_VALUE)
                         .add(lblStatus))
                     .add(jLabel6)
                     .add(layout.createSequentialGroup()
@@ -144,16 +149,16 @@ public class SearchDownloadPanel extends WizardPage {
                             .add(jLabel8))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(lblNumUrlsDownloaded, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
-                            .add(lblNumUrlErrors, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
-                            .add(lblNumInvalidSize, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
-                            .add(lblWordCount, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
-                            .add(lblCurrentCorpusSize, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)))
-                    .add(prgOverall, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
-                    .add(jSeparator1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
+                            .add(lblNumUrlsDownloaded, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                            .add(lblNumUrlErrors, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                            .add(lblNumInvalidSize, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                            .add(lblWordCount, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                            .add(lblCurrentCorpusSize, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)))
+                    .add(prgOverall, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+                    .add(jSeparator1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                         .add(jLabel9)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 92, Short.MAX_VALUE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 97, Short.MAX_VALUE)
                         .add(btnDownload)))
                 .addContainerGap())
         );
@@ -255,9 +260,23 @@ public class SearchDownloadPanel extends WizardPage {
         System.out.println("PageSize in SearchDownloadPanel has been set to:");
         System.out.println(customSize);
         
-        // This class downloads the content from the URLs
-        final DownloadUrls worker = new DownloadUrls(selectedFiles, corpusFilename, corpusFormat, WordCount, customSize) 
+        boolean advancedBox;
+        
+        if (getWizardData("Advanced") == "true")
         {
+            advancedBox = true;
+            System.out.println("advancedBox in SearchDownloadPanel has been set to true");
+        }
+        else
+        {
+            advancedBox = false;
+            System.out.println("advancedBox in SearchDownloadPanel has been set to sfalse");
+        }
+        
+        // This class downloads the content from the URLs
+        final DownloadUrls worker = new DownloadUrls(selectedFiles, corpusFilename, corpusFormat, WordCount, customSize, advancedBox) 
+        {
+                        
             protected void done() {
          
                 downloadComplete = true;

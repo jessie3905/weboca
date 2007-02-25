@@ -58,7 +58,7 @@ public class HTMLUtils {
 
     private static String getText(Node node) {
         
-        System.out.println("Getting text...");
+        //System.out.println("Getting text...");
         
         NodeList children = node.getChildNodes();
         StringBuffer sb = new StringBuffer();
