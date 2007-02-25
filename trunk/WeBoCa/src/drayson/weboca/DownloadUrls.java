@@ -31,24 +31,31 @@ import org.jdesktop.swingworker.SwingWorker;
 public class DownloadUrls extends SwingWorker<Integer, Integer> {
     
     private static final int MAX_BUFFER_SIZE = 1024;
+    public static long localCorpusSize = 0;
     
     private List<String> urls;
     private String corpusOutputFilename;
     private String format;
+    private long WordCount;
+    private int customSize;
+    private boolean advanced;
 
     private DownloadStatus downloadStatus;
     
-    private int WordCount;
-    private int customSize;
-    
-    public DownloadUrls(List<String> urls, String corpusOutputFilename, String format, int WordCount, int customSize) {
-    
+    public DownloadUrls(List<String> urls, String corpusOutputFilename, String format, int WordCount, int customSize, boolean advanced) {
+
         this.format = format;
         this.corpusOutputFilename = corpusOutputFilename;
         this.urls = urls;
-        downloadStatus = new DownloadStatus();
-        this.WordCount = WordCount;
+        this.WordCount = Long.valueOf(WordCount);
         this.customSize = customSize;
+        this.advanced = advanced; 
+        
+        downloadStatus = new DownloadStatus();
+        
+        System.out.println("WordCount has been passed to DownloadUrls as: " + WordCount);
+        System.out.println("customSize has been passed to DownloadUrls as: " + customSize);
+        System.out.println("advanced has been passed to DownloadUrls as: " + advanced);
     
     }
 
@@ -56,44 +63,7 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
         return ((float) downloaded / size) * 100;
     }
      
-    private int getWords()
-    {
-        int words;
-                
-        if (WordCount != 0)
-        {
-            words = WordCount;
-            return words;
-        }
-        else
-        {
-            words = downloadStatus.getNumWords() + 1;
-            return words;
-        }
-    }
-    
-    private int getSize()
-    {
-        int size;
-        if (customSize != 0)
-        {
-            size = customSize;
-            return size;
-        }
-        else
-        {
-            size = 1;
-            return size;
-        }    
-    }
-    
     protected Integer doInBackground() throws Exception {
-        
-        int words = getWords();
-        
-        // Ensure that the program stops when the defined number of words has been met
-        while (downloadStatus.getNumWords() < words)
-        {
         
         RandomAccessFile file = null;
         InputStream stream = null;
@@ -101,6 +71,8 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
         int downloaded = 0;
         int size = -1;
         int status;
+        
+              
         
         File corpusOutputFile = new File(corpusOutputFilename);
         BufferedWriter writer;
@@ -112,14 +84,26 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
         }
         URL currentUrl;
         int currentUrlCount = 0;
-        
-        for (final String urlString: urls) {
+       
+            
+        for (final String urlString: urls) 
+        {
             currentUrlCount++;
             downloaded = 0;
             size = -1;
             currentUrl = new URL(urlString);
             
+
             try {
+                
+                
+                if ((localCorpusSize >= WordCount) && (WordCount != 0))
+                {
+                    System.out.println("localCorpusSize is :" + localCorpusSize + " - Should be bigger than:");
+                    System.out.println("WordCount is :" + WordCount);
+                    System.out.println("Therefore in the continue loop");
+                    continue;
+                }
                 
                 setProgress(0);
                 downloadStatus.setStatus(DownloadStatus.CONNECTING);
@@ -142,35 +126,87 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
                     throw new Exception("Invalid response code");
                 }
                 
-                int customsize = getSize();
-                
-                // Check for valid size of the page to be downloaded - in OCTETS - (the number of bytes!)                         
+                // Check for valid content length.
                 int contentLength = connection.getContentLength();
-                System.out.print(connection.getURL());
-                int localSize = getSize();
-                if (contentLength < localSize) 
-                {
-                    System.out.println("Oh no! The max size of the page is:");
-                    System.out.println(getSize());
-                    System.out.println("And this page is:");
-                    System.out.println(contentLength);
-                    throw new Exception("Invalid content length");
-                }
-                System.out.println("This time it's:");
-                System.out.println(contentLength);
-                /* Set the size for this download if it hasn't been already set. */
-                if (size == -1) {
-                    size = contentLength;
+                System.out.println("The current pages length is " + contentLength);
+                
+                 if (advanced)
+                 {
                     
-                }
+                    if (customSize != 0)
+                    {
+
+                            if (contentLength > customSize) 
+                            {
+                                 System.out.println("The current page length is bigger than the customSize");
+                                 downloadStatus.setNumInvalid(downloadStatus.getNumInvalid()+1);
+                                 throw new Exception("Invalid content length");
+                                 
+                            }
                 
-                // used to be size
-                if (!HTMLUtils.isValidSize(localSize)) {
-                    downloadStatus.setNumInvalid(downloadStatus.getNumInvalid()+1);
-                    continue;
-                }
+                            /* Set the size for this download if it hasn't been already set. */
+                            if (size == -1) 
+                            {
+                               size = contentLength;
+                            }
+                            
+                            if (!HTMLUtils.isValidSize(size)) 
+                            {
+                                System.out.println("HTMLUtils has passed on that this page is not a valid size");
+                                continue;
+                            }
+                            
+                            
+                    }
+                    else
+                    {
+                       
+                        if (contentLength < 1) 
+                        {
+                             
+                             System.out.println("This page's length is less than 1, exception thrown");
+                             throw new Exception("Invalid content length");
+                             
+                        }
+                
+                         /* Set the size for this download if it hasn't been already set. */
+                            if (size == -1) {
+                                size = contentLength;
+                                
+                          }
+                
+                          if (!HTMLUtils.isValidSize(size)) {
+                             System.out.println("HTMLUtils has passed on that this page is not a valid size");
+                             downloadStatus.setNumInvalid(downloadStatus.getNumInvalid()+1);
+                             continue;
+                         }
+                     }
+                  }
+                  else
+                  {
+                      if (contentLength < 1) 
+                      {
+                           System.out.println("This page's length is less than 1, exception thrown");
+                           throw new Exception("Invalid content length");     
+                      }
+                
+                     /* Set the size for this download if it hasn't been already set. */
+                      if (size == -1) 
+                      {
+                         size = contentLength;   
+                      }
+                
+                      if (!HTMLUtils.isValidSize(size)) 
+                      {
+                         System.out.println("HTMLUtils has passed on that this page is not a valid size");
+                         downloadStatus.setNumInvalid(downloadStatus.getNumInvalid()+1);
+                         continue;
+                      }
+                  }
                 
                 
+                       
+                System.out.println("Page size checked has been passed, continuing to download");
                 downloadStatus.setStatus(DownloadStatus.DOWNLOADING);
                 firePropertyChange("status", null, downloadStatus);
                 
@@ -209,7 +245,8 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
                     
                     
                 }
-            } catch (Exception e) {
+ 
+            }catch (Exception e) {
                 
                 downloadStatus.setStatus(DownloadStatus.ERROR);
                 
@@ -217,7 +254,7 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
                 setProgress(100);
                 firePropertyChange("overall", Integer.valueOf(0), Integer.valueOf((100*(currentUrlCount-1)) + 100));
                 
-            } finally {
+            }finally {
                 // Close file.
                 if (file != null) {
                     try {
@@ -231,6 +268,8 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
                         stream.close();
                     } catch (Exception e) {}
                 }
+                
+               System.out.println("File closed and connection to server gone!");
             }
             
             if (downloadStatus.getStatus() == DownloadStatus.DOWNLOADED) {
@@ -303,12 +342,16 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
             downloadStatus.setStatus(DownloadStatus.COMPLETE);
             
             firePropertyChange("status", null, downloadStatus);
-        } // end for loop
-        writer.close();
+            
+            localCorpusSize = downloadStatus.getNumWords();
         }
+        
+        
+        
+        writer.close();
         return Integer.valueOf(DownloadStatus.COMPLETE);
+        
     }
-    
 
     public String getFileName(URL url) {
         String fileName = url.getFile();
