@@ -32,12 +32,12 @@ public class GoogleSearchEngine implements SearchEngine {
         googleSearch = new GoogleSearch();
     }
     
-    public GoogleSearchEngine(String key, String addParams) {
+    public GoogleSearchEngine(String key, String addParams, String whiteSearchString, String blackSearchString) {
         googleSearch = new GoogleSearch();
         setKey(key);
         this.additionalParams = addParams;
         // Pad out the additional params
-        additionalParams = " " + additionalParams + " ";
+        additionalParams = " " + additionalParams + " " + whiteSearchString + blackSearchString;
         System.out.println("Set Params Within GoogleSearchEngine as " + additionalParams);
     }
     
@@ -54,6 +54,8 @@ public class GoogleSearchEngine implements SearchEngine {
        
         // Ensure that the filetypeExclusions, the additional Params and the query are queried!
         googleSearch.setQueryString(filetypeExclusion + additionalParams + query);
+        System.out.println("Final search string is: '" + filetypeExclusion + additionalParams + query + "'");
+        
         GoogleSearchResult googleResult = null;
         try {
             googleResult = googleSearch.doSearch();

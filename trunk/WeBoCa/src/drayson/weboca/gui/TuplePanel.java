@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
+import org.netbeans.spi.wizard.Wizard;
 import org.netbeans.spi.wizard.WizardPage;
 
 /**
@@ -139,9 +140,13 @@ public class TuplePanel extends WizardPage {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateActionPerformed
-        
+
         String seedsString = (String)getWizardData("txtSeeds");
+        
+       
         //seedsString = seedsString.replaceAll("\r", "");
+
+
         
         List<String> seeds = new ArrayList<String>();
         String[] seedsArray = seedsString.split("\n");

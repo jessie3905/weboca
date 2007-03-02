@@ -116,7 +116,7 @@
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="20"/>
             <Property name="enabled" type="boolean" value="false"/>
-            <Property name="name" type="java.lang.String" value="txtSeeds"/>
+            <Property name="name" type="java.lang.String" value="blackWords"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
           <Events>

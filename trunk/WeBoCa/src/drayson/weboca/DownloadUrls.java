@@ -72,8 +72,6 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
         int size = -1;
         int status;
         
-              
-        
         File corpusOutputFile = new File(corpusOutputFilename);
         BufferedWriter writer;
         try {
