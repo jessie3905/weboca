@@ -230,11 +230,21 @@ public class SearchResultsPanel extends WizardPage {
                 System.out.println("The following line is what the search engine will be passed:");
                 System.out.println(whiteSearchString);
                 
-            
+                WebSearch search = null;
                 
-                WebSearch search = new WebSearch(new GoogleSearchEngine((String)getWizardData("txtKey"), (String)getWizardData("AdditionalParam"), whiteSearchString, blackSearchString));
+                // Use the Yahoo search engine if it were selected
+                if (getWizardData("SearchEngine") == "Yahoo")
+                {
+                    search = new WebSearch(new YahooSearchEngine("kSPhYbnV34FZ3P3bxpgILDvtpjHRt2FNSiBaA0iT_1KaJ6R4xEqNRoXbYf9H"));
+                }
                 
-                //WebSearch search = new WebSearch(new YahooSearchEngine("kSPhYbnV34FZ3P3bxpgILDvtpjHRt2FNSiBaA0iT_1KaJ6R4xEqNRoXbYf9H"));
+                // Use the Google search engine if it were selected
+                if (getWizardData("SearchEngine") == "Google")
+                {
+                    search = new WebSearch(new GoogleSearchEngine((String)getWizardData("txtKey"), (String)getWizardData("AdditionalParam"), whiteSearchString, blackSearchString));
+                }
+                
+          
                 
                 for (String t: tuples) {
                     //System.out.println("Searching for tuple: \"" + t + "\"...");
