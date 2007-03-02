@@ -20,6 +20,10 @@ public class SearchEngineConfigPanel extends WizardPage {
         super("Search Engines", "Search Engines");
         initComponents();
         
+        // Set the default parameters
+        putWizardData("SearchEngine", "Google");
+        putWizardData("SearchEngineChanged", "False");
+        
     }
     
     public static String getDescription() {
@@ -27,10 +31,17 @@ public class SearchEngineConfigPanel extends WizardPage {
         return "Search Engines";
     }
     
-    protected String validateContents (Component component, Object o) {
-        if (txtKey.getText().trim().equals("")) {
-            return "Must insert your key";
+    protected String validateContents (Component component, Object o) {      
+        
+        if (getWizardData("SearchEngineChanged") == "True")
+        {
+            return "You must save your selection!";
         }
+        if (txtKey.getText().trim().equals("") && lstSearchEngines.getSelectedIndex() != 1)
+        {
+            return "You must enter your key!";
+        }
+        
         return null;
     }
     
@@ -47,13 +58,22 @@ public class SearchEngineConfigPanel extends WizardPage {
         jLabel2 = new javax.swing.JLabel();
         txtKey = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        saveButton = new javax.swing.JButton();
 
         lstSearchEngines.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Google API", "Yahoo Web Services" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        lstSearchEngines.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        lstSearchEngines.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstSearchEngines.setSelectedIndex(0);
+        lstSearchEngines.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstSearchEnginesValueChanged(evt);
+            }
+        });
+
         jScrollPane1.setViewportView(lstSearchEngines);
 
         jLabel1.setText("Please select a search engine from the below available search engines:");
@@ -65,6 +85,14 @@ public class SearchEngineConfigPanel extends WizardPage {
 
         jLabel4.setText("Further search API's may be added later.");
 
+        saveButton.setText("Save Selection!");
+        saveButton.setEnabled(false);
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -72,36 +100,71 @@ public class SearchEngineConfigPanel extends WizardPage {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jLabel1)
-                    .add(layout.createSequentialGroup()
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                         .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 113, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 29, Short.MAX_VALUE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 31, Short.MAX_VALUE)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
                                 .add(org.jdesktop.layout.GroupLayout.LEADING, txtKey)
                                 .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel2))
-                            .add(jLabel4))))
-                .add(44, 44, 44))
+                            .add(jLabel4))
+                        .add(36, 36, 36))
+                    .add(layout.createSequentialGroup()
+                        .add(jLabel1)
+                        .addContainerGap(54, Short.MAX_VALUE))
+                    .add(layout.createSequentialGroup()
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                            .add(saveButton)
+                            .add(jSeparator1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 384, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .add(11, 11, 11)
+                .addContainerGap()
+                .add(saveButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jSeparator1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jLabel1)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(layout.createSequentialGroup()
-                        .add(15, 15, 15)
-                        .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 226, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(layout.createSequentialGroup()
-                        .add(79, 79, 79)
+                        .add(73, 73, 73)
                         .add(jLabel2)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(txtKey, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 108, Short.MAX_VALUE)
-                        .add(jLabel4)))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 73, Short.MAX_VALUE)
+                        .add(jLabel4))
+                    .add(layout.createSequentialGroup()
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 168, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .add(34, 34, 34))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void lstSearchEnginesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstSearchEnginesValueChanged
+        
+        putWizardData("SearchEngineChanged", "True");
+        saveButton.setEnabled(true);
+        
+        if (lstSearchEngines.getSelectedIndex() == 1)
+        {
+            txtKey.setEnabled(false);
+            txtKey.setText("Key not required");
+            putWizardData("SearchEngine", "Yahoo");
+        }
+        
+        else
+        {
+            txtKey.setText("jGwiQmNQFHIWY8rRouo0aFcconU5rERi");
+            txtKey.setEnabled(true);
+            putWizardData("SearchEngine", "Google");
+        }
+    }//GEN-LAST:event_lstSearchEnginesValueChanged
+
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        putWizardData("SearchEngineChanged", "False");
+    }//GEN-LAST:event_saveButtonActionPerformed
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -109,7 +172,9 @@ public class SearchEngineConfigPanel extends WizardPage {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JList lstSearchEngines;
+    private javax.swing.JButton saveButton;
     private javax.swing.JTextField txtKey;
     // End of variables declaration//GEN-END:variables
     

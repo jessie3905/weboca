@@ -60,8 +60,8 @@ public class GoogleSearchEngine implements SearchEngine {
         try {
             googleResult = googleSearch.doSearch();
         } catch (GoogleSearchFault gsf) {
-            System.err.println("Google Search Engine fault:");
-            System.err.println(gsf);
+               System.err.println("Google Search Engine fault:");
+               System.err.println(gsf);
         }
         
         List<SearchResult> resultList = new ArrayList<SearchResult>();
