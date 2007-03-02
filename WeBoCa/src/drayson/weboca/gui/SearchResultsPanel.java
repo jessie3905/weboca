@@ -8,27 +8,21 @@ package drayson.weboca.gui;
 
 import drayson.weboca.HTMLUtils;
 import drayson.weboca.Utils;
-import drayson.weboca.search.GoogleSearchEngine;
 import drayson.weboca.search.SearchResult;
 import drayson.weboca.search.WebSearch;
+import drayson.weboca.search.YahooSearchEngine;
+import drayson.weboca.search.GoogleSearchEngine;
 import java.awt.Component;
 import java.awt.Cursor;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.ListModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import org.jdesktop.swingworker.SwingWorker;
 import org.netbeans.spi.wizard.WizardController;
 import org.netbeans.spi.wizard.WizardPage;
@@ -165,6 +159,7 @@ public class SearchResultsPanel extends WizardPage {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
 
+        System.out.println((String)getWizardData("blackWords"));
         final JFrame parentFrame = (JFrame)Utils.GetParent(this, "javax.swing.JFrame");
         parentFrame.setCursor(Cursor.WAIT_CURSOR);
         btnSearch.setEnabled(false);
@@ -186,7 +181,60 @@ public class SearchResultsPanel extends WizardPage {
                 
                 tuples = Arrays.asList(tupleString.split("\n"));
                 
-                WebSearch search = new WebSearch(new GoogleSearchEngine((String)getWizardData("txtKey"), (String)getWizardData("AdditionalParam")));
+                
+                // Code to convert the blackWords into a string for use in search engines
+                String blackWords = (String)getWizardData("blackWords");
+                
+                List<String> blacks = new ArrayList<String>();
+                String[] blacksArray = blackWords.split("\n");
+                
+                String blackSearchString = "";
+                
+                if (blackWords != " ")
+                {
+                                
+                    // Now need to reconstruct a string for the search engine
+                    for (int i = 0; i < blacksArray.length; i++) 
+                    {
+                        blackSearchString = blackSearchString + " -" + blacksArray[i];
+                    }
+                    
+                    blackSearchString = blackSearchString + " ";
+                }
+                
+                System.out.println("The following line is what the search engine will be passed:");
+                System.out.println(blackSearchString);
+                
+               
+                
+                // Code to convert the blackWords into a string for use in search engines
+                String whiteWords = (String)getWizardData("whiteWords");
+                
+                List<String> whites = new ArrayList<String>();
+                String[] whitesArray = whiteWords.split("\n");
+                
+                String whiteSearchString = "";
+                
+                if (whiteWords != " ")
+                {
+                                
+                    // Now need to reconstruct a string for the search engine
+                    for (int i = 0; i < whitesArray.length; i++) 
+                    {
+                        whiteSearchString = whiteSearchString + " +" + whitesArray[i];
+                    }
+                    
+                    whiteSearchString = whiteSearchString + " ";
+                }
+                
+                System.out.println("The following line is what the search engine will be passed:");
+                System.out.println(whiteSearchString);
+                
+            
+                
+                WebSearch search = new WebSearch(new GoogleSearchEngine((String)getWizardData("txtKey"), (String)getWizardData("AdditionalParam"), whiteSearchString, blackSearchString));
+                
+                //WebSearch search = new WebSearch(new YahooSearchEngine("kSPhYbnV34FZ3P3bxpgILDvtpjHRt2FNSiBaA0iT_1KaJ6R4xEqNRoXbYf9H"));
                 
                 for (String t: tuples) {
                     //System.out.println("Searching for tuple: \"" + t + "\"...");

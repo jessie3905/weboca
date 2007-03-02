@@ -29,6 +29,8 @@ public class BlackPanel extends WizardPage {
         super("Seeds", "Seeds");
         initComponents();
         
+        // Set up some defaults
+        putWizardData("blackWords", " ");
     }
     
     public static String getDescription() {
@@ -138,7 +140,7 @@ public class BlackPanel extends WizardPage {
         blackWords.setColumns(20);
         blackWords.setRows(20);
         blackWords.setEnabled(false);
-        blackWords.setName("txtSeeds");
+        blackWords.setName("blackWords");
         blackWords.setOpaque(false);
         //txtSeeds.setText("arabic\nconcordance\nlanguage\nlearning\ncluster");
         blackWords.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -229,7 +231,15 @@ public class BlackPanel extends WizardPage {
 // Set the state "saved" in the wizard to true as it's now been saved
         putWizardData("blacksaved", "true");
         
-        // Additional commands to save the state of the list
+        if (blackWords.getText().length() == 0)
+        {
+            putWizardData("blackWords", " ");
+        }
+        else
+        {
+            putWizardData("blackWords", blackWords.getText());
+        }
+        
         
       
     }//GEN-LAST:event_saveButtonActionPerformed

@@ -29,6 +29,8 @@ public class WhitePanel extends WizardPage {
         super("Seeds", "Seeds");
         initComponents();
         
+        // Set up some defaults
+        putWizardData("whiteWords", " ");
     }
     
     public static String getDescription() {
@@ -229,7 +231,14 @@ public class WhitePanel extends WizardPage {
 // Set the state "saved" in the wizard to true as it's now been saved
         putWizardData("whitesaved", "true");
         
-        // Additional commands to save the state of the list
+        if (whiteWords.getText().length() == 0)
+        {
+            putWizardData("whiteWords", " ");
+        }
+        else
+        {
+            putWizardData("whiteWords", whiteWords.getText());
+        }
         
       
     }//GEN-LAST:event_saveButtonActionPerformed
