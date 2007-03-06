@@ -39,10 +39,14 @@ public class WelcomePanel extends WizardPage {
         
         //By default, nothing is selected
         controller.setProblem("Nothing selected");
+        
 
         rdoSimple.putClientProperty (userType, VALUE_SIMPLE);
         rdoAdvanced.putClientProperty (userType, VALUE_ADVANCED);
         rdoModify.putClientProperty(userType, VALUE_MODIFY);
+        
+        // Set up this variable early on
+        putWizardData("LoadedCorpus", " ");
         
         
       

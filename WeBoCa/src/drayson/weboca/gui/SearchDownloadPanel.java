@@ -270,7 +270,7 @@ public class SearchDownloadPanel extends WizardPage {
         else
         {
             advancedBox = false;
-            System.out.println("advancedBox in SearchDownloadPanel has been set to sfalse");
+            System.out.println("advancedBox in SearchDownloadPanel has been set to false");
         }
         
         // This class downloads the content from the URLs

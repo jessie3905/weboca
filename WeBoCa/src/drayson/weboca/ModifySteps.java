@@ -13,13 +13,19 @@ public class ModifySteps extends WizardPanelProvider {
     /** Creates a new instance of CatLoversSteps */
     public ModifySteps() {
         super (
-            new String[] { "Summary" },
-            new String[] { "Summary" });
+            new String[] { "Load Corpus", "Process Corpus", "Summary" },
+            new String[] { "Load Corpus", "Process Corpus", "Summary" });
     }
     
     protected JComponent createPanel(WizardController controller, String id, Map settings) {
         switch (indexOfStep(id)) {
             case 0 :
+                return new LoadCorpusPanel();
+                
+            case 1 :
+                return new ProcessPanel();
+                
+            case 2 :
                 return new SummaryPanel();
                 
             default :

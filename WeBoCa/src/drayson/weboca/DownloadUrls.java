@@ -11,6 +11,7 @@ package drayson.weboca;
 
 import andyr.jtokeniser.BreakIteratorTokeniser;
 import andyr.jtokeniser.RegexTokeniser;
+import drayson.weboca.gui.SaveURLWizard;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,6 +43,9 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
 
     private DownloadStatus downloadStatus;
     
+    public String[] used_urls;
+    public int tempcount = 0;
+    
     public DownloadUrls(List<String> urls, String corpusOutputFilename, String format, int WordCount, int customSize, boolean advanced) {
 
         this.format = format;
@@ -50,6 +54,8 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
         this.WordCount = Long.valueOf(WordCount);
         this.customSize = customSize;
         this.advanced = advanced; 
+        
+        
         
         downloadStatus = new DownloadStatus();
         
@@ -67,6 +73,8 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
         
         RandomAccessFile file = null;
         InputStream stream = null;
+        
+        SaveURLWizard sw = new SaveURLWizard();
         
         int downloaded = 0;
         int size = -1;
@@ -104,6 +112,7 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
                 }
                 
                 setProgress(0);
+                
                 downloadStatus.setStatus(DownloadStatus.CONNECTING);
                 firePropertyChange("status", null, downloadStatus);
                 
@@ -205,6 +214,10 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
                 
                        
                 System.out.println("Page size checked has been passed, continuing to download");
+                
+                
+
+                
                 downloadStatus.setStatus(DownloadStatus.DOWNLOADING);
                 firePropertyChange("status", null, downloadStatus);
                 
@@ -243,8 +256,14 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
                     
                     
                 }
+                
+                
+
  
             }catch (Exception e) {
+                
+                System.out.println("Exception was thrown:");
+                System.out.println(e);
                 
                 downloadStatus.setStatus(DownloadStatus.ERROR);
                 
@@ -269,6 +288,7 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
                 
                System.out.println("File closed and connection to server gone!");
             }
+            
             
             if (downloadStatus.getStatus() == DownloadStatus.DOWNLOADED) {
                 
@@ -303,7 +323,7 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
                         }
                         else if (format.equals("vertical")) {
                             System.out.print("Writing VERT corpus... ");
-                            writer.write("<doc id=\"" + downloadStatus.getNumDownloads()+1 + "\" url=\"" + currentUrl.toString() + "\">");
+                        writer.write("<doc id=\"" + downloadStatus.getNumDownloads()+1 + "\" url=\"" + currentUrl.toString() + "\">");
                             writer.newLine();
                             RegexTokeniser ret = new RegexTokeniser(document, "\\w+", true);
                             String token = "";
@@ -342,6 +362,9 @@ public class DownloadUrls extends SwingWorker<Integer, Integer> {
             firePropertyChange("status", null, downloadStatus);
             
             localCorpusSize = downloadStatus.getNumWords();
+            // Some code to save the URLS
+            //System.out.println(currentUrl.toString());
+            //sw.SaveURLWizard(currentUrl.toString());
         }
         
         

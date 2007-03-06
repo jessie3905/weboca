@@ -12,8 +12,8 @@ public class AdvancedSteps extends WizardPanelProvider {
     /** Creates a new instance of CatLoversSteps */
     public AdvancedSteps() {
         super (
-            new String[] { "Corpus Destination", "Seeds", "Tuples", "Search Engines", "Advanced Options", "White List", "Black List", "Search Results", "Download Corpus", "Summary" },
-            new String[] { "Choose Corpus Destination", "Specify seed terms", "Generate tuples", "Search Engines", "Advanced Options", "White List", "Black List", "Search Results", "Download Corpus", "Summary" });
+            new String[] { "Corpus Destination", "Seeds", "Tuples", "Search Engines", "Advanced Options", "White List", "Black List", "Search Results", "Download Corpus", "Collection Summary", "Process Corpus" },
+            new String[] { "Choose Corpus Destination", "Specify seed terms", "Generate tuples", "Search Engines", "Advanced Options", "White List", "Black List", "Search Results", "Download Corpus", "Collection Summary", "Process Corpus" });
        }
     
     protected JComponent createPanel(WizardController controller, String id, Map settings) {
@@ -47,6 +47,9 @@ public class AdvancedSteps extends WizardPanelProvider {
                 
             case 9 :
                 return new SummaryPanel();
+                
+            case 10 :
+                return new ProcessPanel();
                 
             default :
                 throw new IllegalArgumentException (id);
