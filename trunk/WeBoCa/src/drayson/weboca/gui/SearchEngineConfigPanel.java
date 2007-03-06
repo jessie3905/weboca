@@ -45,6 +45,18 @@ public class SearchEngineConfigPanel extends WizardPage {
         return null;
     }
     
+    private void doSave()
+    {
+         if (lstSearchEngines.getSelectedIndex() == 1)
+        {
+            putWizardData("SearchEngine", "Yahoo");
+        }
+        else
+        {
+            putWizardData("SearchEngine", "Google");
+        }
+    }
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -164,6 +176,7 @@ public class SearchEngineConfigPanel extends WizardPage {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         putWizardData("SearchEngineChanged", "False");
+        doSave();
     }//GEN-LAST:event_saveButtonActionPerformed
     
     

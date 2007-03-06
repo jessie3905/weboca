@@ -24,6 +24,7 @@ public class HTMLUtils {
     
     private static long MIN_FILE_SIZE = 1024L * 2;
     private static long MAX_FILE_SIZE = 1024L * 1000 * 5;
+    private static int localcount = 0;
     
     /** Creates a new instance of HTMLUtils */
     private HTMLUtils() {
@@ -31,27 +32,44 @@ public class HTMLUtils {
     
     public static String getDocument(File file) throws FileNotFoundException {
         
+        System.out.println("Making a new Tidy");
         Tidy tidy = new Tidy();
         
+        System.out.println("Making a buffered input stream and passing it the file:");
         BufferedInputStream is = new BufferedInputStream(new FileInputStream(file));
         
+        System.out.println("seeing some options in tidy");
         tidy.setQuiet(true);
         tidy.setShowWarnings(false);
+        
+        System.out.println("tidy.parseDOM");
         org.w3c.dom.Document root = tidy.parseDOM(is, null);
+        
+        System.out.println("Getting the rawDoc element");
         Element rawDoc = root.getDocumentElement();
         
+        System.out.println("Returning the body of the rawDoc element");
         return getBody(rawDoc);
     }
     
     private static String getBody(Element rawDoc) {
         if (rawDoc == null) {
+            System.out.println("rawDoc was null!");
             return null;
         }
 
+        
         String body = "";
+        
+        System.out.println("Making a nodelist and getting elements by tag name");
         NodeList children = rawDoc.getElementsByTagName("body");
         if (children.getLength() > 0) {
+           
+            System.out.println("The children length is: " + children.getLength());
+            System.out.println("getting text from the children");
             body = getText(children.item(0));
+            System.out.println("Local count is now: " + localcount);
+            
         }
         return body;
     }
@@ -59,11 +77,16 @@ public class HTMLUtils {
     private static String getText(Node node) {
         
         //System.out.println("Getting text...");
-        
+        System.out.println("Getting a node list from the child nodes");
         NodeList children = node.getChildNodes();
+        
+        System.out.println("Making a string buffer");
         StringBuffer sb = new StringBuffer();
         
         for (int i = 0; i < children.getLength(); i++) {
+            System.out.println("Children's length is: " + children.getLength());
+            System.out.println("Setting the node child to the item of children");
+            localcount++;
             Node child = children.item(i);
             switch (child.getNodeType()) {
             case Node.ELEMENT_NODE:

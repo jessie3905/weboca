@@ -6,6 +6,7 @@
 
 package drayson.weboca.gui;
 
+import java.io.IOException;
 import org.netbeans.spi.wizard.WizardPage;
 
 /**
@@ -34,6 +35,8 @@ public class SummaryPanel extends WizardPage {
         
         lblCorpusFilename.setText(corpusFilename);
         
+        lblSearchEngineUsed.setText((String)getWizardData("SearchEngine"));
+        
         lblNumWords.setText((String)this.getWizardData("lblWordCount"));
         
         lblFilesize.setText((String)this.getWizardData("lblCurrentCorpusSize"));
@@ -57,11 +60,18 @@ public class SummaryPanel extends WizardPage {
         lblFilesize = new javax.swing.JLabel();
         lblNumWords = new javax.swing.JLabel();
         lblUrlsIncluded = new javax.swing.JLabel();
+        viewCorpusButton = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        viewCorpusButton1 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        lblSearchEngineUsed = new javax.swing.JLabel();
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel1.setText("New corpus has been created and saved:");
 
         lblCorpusFilename.setText("corpus location");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel3.setText("Details");
 
         jLabel6.setText("Corpus file size:");
@@ -76,34 +86,59 @@ public class SummaryPanel extends WizardPage {
 
         lblUrlsIncluded.setText("jLabel7");
 
+        viewCorpusButton.setText("View Corpus in Notepad");
+        viewCorpusButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewCorpusButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel7.setText("Additional Options");
+
+        viewCorpusButton1.setText("Save URLs to text file");
+
+        jLabel8.setText("Search Engine used:");
+
+        lblSearchEngineUsed.setText("jLabel2");
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createSequentialGroup()
+                        .addContainerGap()
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel1)
                             .add(layout.createSequentialGroup()
                                 .add(10, 10, 10)
                                 .add(lblCorpusFilename))
-                            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
-                                .add(jLabel1)
-                                .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
-                                    .add(10, 10, 10)
-                                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                        .add(jLabel5)
-                                        .add(jLabel4)
-                                        .add(jLabel6))
-                                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                        .add(lblFilesize)
-                                        .add(lblUrlsIncluded)
-                                        .add(lblNumWords))
-                                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 64, Short.MAX_VALUE))))
-                        .addContainerGap(190, Short.MAX_VALUE))
-                    .add(jLabel3)))
+                            .add(jLabel3)))
+                    .add(layout.createSequentialGroup()
+                        .add(20, 20, 20)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel5)
+                            .add(jLabel4)
+                            .add(jLabel6)
+                            .add(jLabel8))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(lblSearchEngineUsed)
+                            .add(lblFilesize)
+                            .add(lblUrlsIncluded)
+                            .add(lblNumWords)))
+                    .add(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel7)
+                            .add(layout.createSequentialGroup()
+                                .add(10, 10, 10)
+                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(viewCorpusButton)
+                                    .add(viewCorpusButton1))))))
+                .addContainerGap(161, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -112,23 +147,47 @@ public class SummaryPanel extends WizardPage {
                 .add(jLabel1)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(lblCorpusFilename)
-                .add(31, 31, 31)
+                .add(28, 28, 28)
                 .add(jLabel3)
-                .add(6, 6, 6)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 14, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(lblUrlsIncluded))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel5)
-                    .add(lblNumWords))
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(layout.createSequentialGroup()
+                        .add(jLabel8, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 14, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jLabel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 14, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jLabel5)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jLabel6))
+                    .add(layout.createSequentialGroup()
+                        .add(lblSearchEngineUsed)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(lblUrlsIncluded)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(lblNumWords)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(lblFilesize)))
+                .add(24, 24, 24)
+                .add(jLabel7)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel6)
-                    .add(lblFilesize))
-                .addContainerGap(150, Short.MAX_VALUE))
+                .add(viewCorpusButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 18, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(viewCorpusButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 18, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(47, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void viewCorpusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCorpusButtonActionPerformed
+        try 
+        {
+           Runtime.getRuntime().exec("notepad.exe \"" + (String)this.getWizardData("txtFilename") + "\"");
+        } 
+        catch (IOException ex) {
+            System.out.println("Issue opening file:");
+            System.out.println(ex);
+        }
+
+    }//GEN-LAST:event_viewCorpusButtonActionPerformed
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -137,10 +196,15 @@ public class SummaryPanel extends WizardPage {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel lblCorpusFilename;
     private javax.swing.JLabel lblFilesize;
     private javax.swing.JLabel lblNumWords;
+    private javax.swing.JLabel lblSearchEngineUsed;
     private javax.swing.JLabel lblUrlsIncluded;
+    private javax.swing.JButton viewCorpusButton;
+    private javax.swing.JButton viewCorpusButton1;
     // End of variables declaration//GEN-END:variables
     
 }
