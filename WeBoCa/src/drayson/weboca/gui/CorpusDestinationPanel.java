@@ -110,7 +110,7 @@ public class CorpusDestinationPanel extends WizardPage {
 
         btngrCorpusFormat.add(rdoFormatRaw);
         rdoFormatRaw.setSelected(true);
-        rdoFormatRaw.setText("Raw");
+        rdoFormatRaw.setText("Horizontal");
         rdoFormatRaw.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         rdoFormatRaw.setMargin(new java.awt.Insets(0, 0, 0, 0));
         rdoFormatRaw.setName("rdoFormatRaw");
