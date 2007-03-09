@@ -31,8 +31,10 @@ public class CorpusDestinationPanel extends WizardPage {
         rdoFormatVertical.putClientProperty ("corpusFormat", "vertical");
         
         // Set default (which is raw)
-        putWizardData("corpusFormat", "raw");
+        putWizardData("corpusFormat", "vertical");
         System.out.println((String)getWizardData("corpusFormat"));
+        
+  
         
     }
     
@@ -87,9 +89,11 @@ public class CorpusDestinationPanel extends WizardPage {
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
         rdoFormatRaw = new javax.swing.JRadioButton();
-        jLabel2 = new javax.swing.JLabel();
+        corpusLabel = new javax.swing.JLabel();
         rdoFormatVertical = new javax.swing.JRadioButton();
+        noteLabel = new javax.swing.JLabel();
 
+        setEnabled(false);
         lblFilename.setText("Filename");
 
         txtFilename.setName("txtFilename");
@@ -101,6 +105,7 @@ public class CorpusDestinationPanel extends WizardPage {
             }
         });
 
+        lblInstruction.setFont(new java.awt.Font("Tahoma", 1, 11));
         lblInstruction.setText("Select a location to save the new corpus");
 
         jLabel1.setText("Encoding");
@@ -109,9 +114,9 @@ public class CorpusDestinationPanel extends WizardPage {
         jComboBox1.setEnabled(false);
 
         btngrCorpusFormat.add(rdoFormatRaw);
-        rdoFormatRaw.setSelected(true);
         rdoFormatRaw.setText("Horizontal");
         rdoFormatRaw.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        rdoFormatRaw.setEnabled(false);
         rdoFormatRaw.setMargin(new java.awt.Insets(0, 0, 0, 0));
         rdoFormatRaw.setName("rdoFormatRaw");
         rdoFormatRaw.addActionListener(new java.awt.event.ActionListener() {
@@ -120,11 +125,14 @@ public class CorpusDestinationPanel extends WizardPage {
             }
         });
 
-        jLabel2.setText("Corpus format");
+        corpusLabel.setText("Corpus format");
+        corpusLabel.setEnabled(false);
 
         btngrCorpusFormat.add(rdoFormatVertical);
+        rdoFormatVertical.setSelected(true);
         rdoFormatVertical.setText("Vertical");
         rdoFormatVertical.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        rdoFormatVertical.setEnabled(false);
         rdoFormatVertical.setMargin(new java.awt.Insets(0, 0, 0, 0));
         rdoFormatVertical.setName("rdoFormatVertical");
         rdoFormatVertical.addActionListener(new java.awt.event.ActionListener() {
@@ -132,6 +140,10 @@ public class CorpusDestinationPanel extends WizardPage {
                 rdoFormatVerticalActionPerformed(evt);
             }
         });
+
+        noteLabel.setFont(new java.awt.Font("Tahoma", 2, 11));
+        noteLabel.setText("(Please note you cannot process a Horizontal corpus)");
+        noteLabel.setEnabled(false);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -147,17 +159,21 @@ public class CorpusDestinationPanel extends WizardPage {
                             .add(lblFilename)
                             .add(jLabel1))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, jComboBox1, 0, 251, Short.MAX_VALUE)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, txtFilename, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(btnBrowse))
-                    .add(jLabel2)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(layout.createSequentialGroup()
+                                .add(txtFilename, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 223, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(20, 20, 20)
+                                .add(btnBrowse))
+                            .add(jComboBox1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 107, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                    .add(corpusLabel)
                     .add(layout.createSequentialGroup()
                         .add(10, 10, 10)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(rdoFormatRaw)
                             .add(rdoFormatVertical)
-                            .add(rdoFormatRaw))))
+                            .add(layout.createSequentialGroup()
+                                .add(17, 17, 17)
+                                .add(noteLabel)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -167,20 +183,22 @@ public class CorpusDestinationPanel extends WizardPage {
                 .add(lblInstruction)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(btnBrowse)
                     .add(lblFilename)
+                    .add(btnBrowse)
                     .add(txtFilename, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel1)
                     .add(jComboBox1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(19, 19, 19)
-                .add(jLabel2)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(rdoFormatRaw)
+                .add(corpusLabel)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(rdoFormatVertical)
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(rdoFormatRaw)
+                .add(14, 14, 14)
+                .add(noteLabel)
+                .addContainerGap(117, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -201,19 +219,36 @@ public class CorpusDestinationPanel extends WizardPage {
             
         }
         
+        corpusLabel.setEnabled(true);
+        rdoFormatVertical.setEnabled(true);
+        
+       if ((String)getWizardData("userType") == "simple")
+       {
+            rdoFormatRaw.setEnabled(true);
+       }
+        
+       lblInstruction.setFont(new java.awt.Font("Tahoma", 0, 11));
+       corpusLabel.setEnabled(true);
+       corpusLabel.setFont(new java.awt.Font("Tahoma", 1, 11));
+       rdoFormatVertical.setEnabled(true);
+       noteLabel.setEnabled(true);
+       
+       
+      
     }//GEN-LAST:event_btnBrowseActionPerformed
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBrowse;
     private javax.swing.ButtonGroup btngrCorpusFormat;
+    private javax.swing.JLabel corpusLabel;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblFilename;
     private javax.swing.JLabel lblInstruction;
-    private javax.swing.JRadioButton rdoFormatRaw;
-    private javax.swing.JRadioButton rdoFormatVertical;
+    private javax.swing.JLabel noteLabel;
+    public static javax.swing.JRadioButton rdoFormatRaw;
+    public static javax.swing.JRadioButton rdoFormatVertical;
     private javax.swing.JTextField txtFilename;
     // End of variables declaration//GEN-END:variables
     

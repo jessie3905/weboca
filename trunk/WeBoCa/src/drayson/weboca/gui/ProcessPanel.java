@@ -7,10 +7,10 @@
 package drayson.weboca.gui;
 
 import java.awt.Component;
-import java.lang.String;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.regex.*;
 import javax.swing.JFileChooser;
 import org.netbeans.spi.wizard.WizardPage;
 
@@ -26,6 +26,10 @@ public class ProcessPanel extends WizardPage {
     private JFileChooser outChooser;
     private String new_corp = "";                // Used to store the processed corpus
     private String old_corp = "";                // The variable used to store whatever corpus was loaded
+    private CharSequence[] cs = new CharSequence[50];
+
+    
+          
     
     /** Creates new form SeedPanel */
     public ProcessPanel() {
@@ -67,50 +71,115 @@ public class ProcessPanel extends WizardPage {
 
     private void removeAlpha()
     {
+        System.out.println("Hello");
+            
+        CharSequence[] cs = { "!", "\"", "£", "$", "%", "^", "&", "*", "(", ")", "`", "¬", "¦", "\\", "|", ",", "<", ">", ".", "/", "?", ";", ":", "'", "@", "[", "{", "}", "]", "#", "~", "=", "+", "-", "_" };
+        
         System.out.println("Now removing all non-alpha numerical terms");
         
         // First collect the corpus being used and put it into a local string variable
         if (getWizardData("LoadedCorpus") != " ")
         {
             System.out.println("Getting the loaded corpus");
+            
+            // Save the old corpus incase the user wants to undo
             old_corp = (String)getWizardData("LoadedCorpus");
             
-            // Code to remove the non alphanumericals
-            System.out.println("Removing all AND instances");
-            new_corp = old_corp.replaceAll("and", "");
+            // First we need to split the corpus into an array of strings - one per line (therefore \n as a seperator)
+            String[] x = Pattern.compile("\n").split(old_corp);
+            String[] cleaned = {};
             
+            boolean clean = true;
+            boolean exists_an = false;
+            
+            for (int i=0; i<x.length; i++) 
+            {
+                System.out.println("Now processing word: " + x[i]);
+
+                // Now, for each word (x[i]) we need to check it against our array of char sequences
+                for (int j=0; j<cs.length; j++)
+                {
+                    System.out.println("Now processing: " + cs[j] + " for word " + x[i]);
+                        
+                    if (x[i].contains(cs[j]))
+                    {
+                         System.out.println(x[i] + " contains a non-alpha-numeric " + cs[j]);
+                         exists_an = true;
+                            
+                         // Now need to stop it processing this word any further if it's already found to be unclean
+                         break;
+                     }  
+                     System.out.println("Finished processing: " + cs[j] + " for word " + x[i]);  
+                 } 
+                 System.out.println("Finished processing word: " + x[i]); 
+                 if (exists_an == false)
+                 {
+                    System.out.println("Adding word: " + x[i] + " to the new corpus");
+                    new_corp = new_corp + x[i] + "\n";
+                 }   
+                 exists_an = false;
+            }
+            System.out.println("Successfully iterated over length of the corpus");     
         }
+        
+        
+        // If a corpus has just been downloaded however, this needs to be processed
         else
         {  
            try { 
 
 	   FileReader fr     = new FileReader((String)getWizardData("txtFilename"));
            BufferedReader br = new BufferedReader(fr);
-
            String temp_corp = "";
-           
-           while ((temp_corp = br.readLine()) != null) {
-               
-              // if condition here to write either vertical or horizontal
+           boolean exists_an = false;
+                      
+           while ((temp_corp = br.readLine()) != null) 
+           {
               
-              // Code to remove the non alphanumericals
-              System.out.println("Removing all AND instances");
-              String temp_temp_corp = temp_corp.replaceAll("and", "");
-              System.out.println("Making the variable new_corp");
-              new_corp = new_corp + temp_temp_corp + "\n";
-               
-              // Incase they want to undo: 
-              System.out.println("Writing to old_corp incase they want to undo");
+              System.out.println("Now processing line: " + temp_corp);
+
+              // Incase they want to undo later, the previous corpus must be generated first
               old_corp = old_corp + temp_corp + "\n"; 
+               
+              // Code to remove the non alphanumericals
+              if (!temp_corp.contains("something"))
+              { 
+                  
+                for (int j=0; j<cs.length; j++)
+                {
+                    System.out.println("Now processing: " + cs[j] + " for word " + temp_corp);
+                        
+                    if (temp_corp.contains(cs[j]))
+                    {
+                         System.out.println(temp_corp + " contains a non-alpha-numeric " + cs[j]);
+                         exists_an = true;
+                            
+                         // Now need to stop it processing this word any further if it's already found to be unclean
+                         break;
+                     }  
+                     System.out.println("Finished processing: " + cs[j] + " for word " + temp_corp);  
+                 } 
+                 System.out.println("Finished processing word: " + temp_corp); 
+                 if (exists_an == false)
+                 {
+                    System.out.println("Adding word: " + temp_corp + " to the new corpus");
+                    new_corp = new_corp + temp_corp + "\n";
+                 }   
+                 exists_an = false;
+
+              }
+
               
            } 
 
-        } catch (IOException e) { 
+        } 
+        catch (IOException e) 
+        { 
            // catch possible io errors from readLine()
            System.out.println("Uh oh, got an IOException error!");
            e.printStackTrace();
         }
-        }
+    }
         
         // The corpus has now been loaded into the old local variable
         System.out.println(old_corp);
@@ -140,11 +209,12 @@ public class ProcessPanel extends WizardPage {
         saveCorpusButton2 = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
         saveCorpusButton3 = new javax.swing.JButton();
+        applyButton1 = new javax.swing.JButton();
 
         viewCorpusButton.setText("View Current Corpus");
 
         methodList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Remove all non-alpha numeric terms", "Other processing option goes here", "Other processing option goes here", "Other processing option goes here", "Other processing option goes here", "Other processing option goes here", "Other processing option goes here", "Other processing option goes here" };
+            String[] strings = { "Copy URLs to Notepad", "Remove URLs from corpus", "Remove all non-alpha numeric terms", "Remove non-English characters", "Other processing option goes here", "Other processing option goes here", "Other processing option goes here", "Other processing option goes here" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -159,7 +229,7 @@ public class ProcessPanel extends WizardPage {
         saveCorpusButton.setText("Save Corpus As...");
 
         applyButton.setFont(new java.awt.Font("Tahoma", 1, 11));
-        applyButton.setText("Apply Now");
+        applyButton.setText("Apply Changes");
         applyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 applyButtonActionPerformed(evt);
@@ -169,6 +239,14 @@ public class ProcessPanel extends WizardPage {
         saveCorpusButton2.setText("Undo All");
 
         saveCorpusButton3.setText("Select All");
+
+        applyButton1.setFont(new java.awt.Font("Tahoma", 1, 11));
+        applyButton1.setText("Write Changes");
+        applyButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                applyButton1ActionPerformed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -199,12 +277,13 @@ public class ProcessPanel extends WizardPage {
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                 .add(35, 35, 35)
                 .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 203, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 41, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 17, Short.MAX_VALUE)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(applyButton)
                     .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                         .add(org.jdesktop.layout.GroupLayout.TRAILING, saveCorpusButton2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(org.jdesktop.layout.GroupLayout.TRAILING, saveCorpusButton3)))
+                        .add(org.jdesktop.layout.GroupLayout.TRAILING, saveCorpusButton3))
+                    .add(applyButton)
+                    .add(applyButton1))
                 .add(22, 22, 22))
         );
         layout.setVerticalGroup(
@@ -228,17 +307,23 @@ public class ProcessPanel extends WizardPage {
                 .add(14, 14, 14)
                 .add(jSeparator3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(15, 15, 15)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(layout.createSequentialGroup()
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
                         .add(saveCorpusButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 18, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(saveCorpusButton3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 18, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 70, Short.MAX_VALUE)
-                        .add(applyButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 18, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(applyButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 18, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(applyButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 17, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(26, 26, 26))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void applyButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButton1ActionPerformed
+// TODO add your handling code here:
+    }//GEN-LAST:event_applyButton1ActionPerformed
 
     private void applyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
         Object[] choices = methodList.getSelectedValues();
@@ -262,6 +347,7 @@ public class ProcessPanel extends WizardPage {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton applyButton;
+    private javax.swing.JButton applyButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
