@@ -192,6 +192,7 @@ public class WelcomePanel extends WizardPage {
         System.out.println((String)getWizardData("userType"));
         
         // Code to enable Advanced features goes below:
+        //CorpusDestinationPanel.rdoFormatRaw.setEnabled(false);
         
     }//GEN-LAST:event_rdoAdvancedActionPerformed
 
@@ -203,7 +204,7 @@ public class WelcomePanel extends WizardPage {
         System.out.println((String)getWizardData("userType"));
         
         // Code to disable any advanced features goes below:
-        //CorpusDestinationPanel.testBox.setEnabled(false);
+        //CorpusDestinationPanel.rdoFormatRaw.setEnabled(true);
     }//GEN-LAST:event_rdoSimpleActionPerformed
  
    
