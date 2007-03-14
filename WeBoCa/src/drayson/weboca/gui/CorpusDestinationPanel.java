@@ -1,7 +1,6 @@
 /*
  * CorpusDestinationPanel.java
  *
- * Created on 06 August 2006, 19:14
  */
 
 package drayson.weboca.gui;
@@ -12,8 +11,10 @@ import javax.swing.JRadioButton;
 import org.netbeans.spi.wizard.WizardPage;
 
 /**
- *
- * @author  Andy Roberts
+ * A GUI that allows the user to save the corpus to a chosen destination, and choose the format of the to-be saved corpus
+ * 
+ * @author  Michael Drayson
+ * @version 1.0
  */
 public class CorpusDestinationPanel extends WizardPage {
     

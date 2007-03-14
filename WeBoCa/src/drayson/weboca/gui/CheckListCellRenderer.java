@@ -1,3 +1,6 @@
+/**
+ * CheckListCellRenderer
+ */
 package drayson.weboca.gui;
 
 import java.awt.BorderLayout;
@@ -8,7 +11,14 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
-// @author Santhosh Kumar T - santhosh@in.fiorano.com
+
+/** 
+ *
+ * A check list cell renderer that extends JPanel - used to render the check list
+ *
+ * @author Michael Drayson
+ * @version 1.0
+ */
 public class CheckListCellRenderer extends JPanel implements ListCellRenderer{ 
     private ListCellRenderer delegate; 
     private ListSelectionModel selectionModel; 
@@ -20,7 +30,6 @@ public class CheckListCellRenderer extends JPanel implements ListCellRenderer{
         setLayout(new BorderLayout()); 
         setOpaque(false); 
         checkBox.setOpaque(false);
-        
     } 
  
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus){ 
