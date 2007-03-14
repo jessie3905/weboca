@@ -1,10 +1,6 @@
 /*
  * DownloadUrls.java
  *
- * Created on 26 July 2006, 21:27
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
  */
 
 package drayson.weboca;
@@ -26,8 +22,10 @@ import java.util.List;
 import org.jdesktop.swingworker.SwingWorker;
 
 /**
+ * This class organises the downloading of text content from the pages returned for the search engine
  *
- * @author Andy Roberts
+ * @author Michael Drayson
+ * @version 1.0
  */
 public class DownloadUrls extends SwingWorker<Integer, Integer> {
     

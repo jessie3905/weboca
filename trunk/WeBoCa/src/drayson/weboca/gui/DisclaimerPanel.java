@@ -1,10 +1,6 @@
 /*
  * DisclaimerPanel.java
  *
- * The initial GUI ensuring the user has read and agreed to any terms.
- *
- * @author Michael Drayson
- * @version 1.0
  */
 
 package drayson.weboca.gui;
@@ -12,39 +8,45 @@ package drayson.weboca.gui;
 import org.netbeans.spi.wizard.WizardPage;
 import java.awt.Component;
 
-public class DisclaimerPanel extends WizardPage {
-    
+/**
+ * The initial GUI ensuring the user has read and agreed to any terms.
+ *
+ * @author Michael Drayson
+ * @version 1.0
+ */
+public class DisclaimerPanel extends WizardPage 
+{
     /**
-     * Creates new form DisclaimerPanel using the Wizard framework
+     * Creates new form DisclaimerPanel using the Wizard framework and initialises the objects on it
      */
-    public DisclaimerPanel() {
+    public DisclaimerPanel() 
+    {
         super("Disclaimer", "Disclaimer");         // Passes parameters to the super class
         initComponents();                          // Initialises all components on the page
     }
     
     /**
-     * Returns the description of this GUI form
+     * Returns the description of the Disclaimer GUI form
      *
-     * @return The description of this form
+     * @return The description of the Disclaimer form
      */
-    public static String getDescription() {
-        
+    public static String getDescription() 
+    {
         return "Disclaimer";
     }
 
     /**
      * Validates the JTextBox confirmBox to ensure that the user has agreed to the disclaimer
      *
-     * @param component The component
-     * @param o The object
+     * @param component The component being validated
+     * @param o The object being validated
      * @return The error presented by the Wizard framework if the condition isn't met
      */
-    protected String validateContents (Component component, Object o) {
-    
+    protected String validateContents (Component component, Object o) 
+    {
         if (!confirmBox.isSelected()) {
             return "Please read the above and tick to confirm.";
         }
-        
         return null;
     }
     
@@ -117,7 +119,6 @@ public class DisclaimerPanel extends WizardPage {
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(confirmBox)
                     .add(jLabel11)
                     .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -134,7 +135,8 @@ public class DisclaimerPanel extends WizardPage {
                         .add(jLabel12)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jLabel13))
-                    .add(jLabel10))
+                    .add(jLabel10)
+                    .add(confirmBox))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -170,7 +172,7 @@ public class DisclaimerPanel extends WizardPage {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-    
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox confirmBox;
@@ -189,5 +191,5 @@ public class DisclaimerPanel extends WizardPage {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     // End of variables declaration//GEN-END:variables
-    
+
 }

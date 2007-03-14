@@ -1,10 +1,5 @@
 /*
  * WelcomePanel.java
- *
- * The second GUI, presenting the user with the option for simple or advanced use of the software
- *
- * @author Michael Drayson
- * @version 1.0
  */
 
 package drayson.weboca.gui;
@@ -16,6 +11,13 @@ import java.util.Map;
 import javax.swing.JRadioButton;
 import org.netbeans.spi.wizard.WizardController;
 
+/** 
+ *
+ * The second GUI, presenting the user with different application routes of WeBoCa
+ *
+ * @author Michael Drayson
+ * @version 1.0
+ */
 public class WelcomePanel extends WizardPage {
     
     public static final String userType = "userType";
@@ -28,7 +30,10 @@ public class WelcomePanel extends WizardPage {
     private final Map wizardData;
     
     /**
-     * Creates new form WelcomePanel used to present the user with the option of simple or advanced.
+     * Creates new form WelcomePanel used to present the user with the three application routes
+     * 
+     * @param step The step choosen
+     * @param map The map of the possible application routes
      */
     public WelcomePanel(WizardController controller, Map wizardData) {
        
@@ -47,13 +52,6 @@ public class WelcomePanel extends WizardPage {
         
         // Set up this variable early on
         putWizardData("LoadedCorpus", " ");
-        
-        
-      
-        
-        // Set the default type of application method, with is default
-        //System.out.println("Setting the default application method to SIMPLE");
-        //putWizardData("userType", "simple");
         
     }
     
@@ -85,7 +83,11 @@ public class WelcomePanel extends WizardPage {
     }
     
     
-    
+    /**
+     * A method that updates Wizard data storage variables to denote the application path choosen
+     *
+     * @param evt The event of clicking a radio button choice
+     */
     private void typeSelect(java.awt.event.ActionEvent evt) {
         JRadioButton button = (JRadioButton) evt.getSource();
         System.out.println("button currently set to " + button.getClientProperty("userType"));
@@ -176,15 +178,23 @@ public class WelcomePanel extends WizardPage {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+  /**
+     * A method that updates Wizard data storage variables to denote the application path choosen
+     *
+     * @param evt The event of clicking the modift radio button
+     */
     private void rdoModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoModifyActionPerformed
         System.out.println("Setting Action Event to MODIFY");
         typeSelect(evt);
         System.out.println("MODIFY SET, testing...");
         System.out.println((String)getWizardData("userType"));
-        
-        // Code to enable Advanced features goes below:
     }//GEN-LAST:event_rdoModifyActionPerformed
 
+    /**
+     * A method that updates Wizard data storage variables to denote the application path choosen
+     *
+     * @param evt The event of clicking the advanced radio button
+     */
     private void rdoAdvancedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoAdvancedActionPerformed
         System.out.println("Setting Action Event to ADVANCED");
         typeSelect(evt);
@@ -196,15 +206,17 @@ public class WelcomePanel extends WizardPage {
         
     }//GEN-LAST:event_rdoAdvancedActionPerformed
 
+    /**
+     * A method that updates Wizard data storage variables to denote the application path choosen
+     *
+     * @param evt The event of clicking the simple radio button
+     */
     private void rdoSimpleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoSimpleActionPerformed
         System.out.println("Setting Action Event to SIMPLE");
         typeSelect(evt);
         
         System.out.println("SIMPLE SET, testing...");
         System.out.println((String)getWizardData("userType"));
-        
-        // Code to disable any advanced features goes below:
-        //CorpusDestinationPanel.rdoFormatRaw.setEnabled(true);
     }//GEN-LAST:event_rdoSimpleActionPerformed
  
    

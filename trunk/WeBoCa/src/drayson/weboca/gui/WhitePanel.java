@@ -1,7 +1,6 @@
 /*
- * SeedPanel.java
+ * WhitePanel.java
  *
- * Created on 11 May 2006, 19:33
  */
 
 package drayson.weboca.gui;
@@ -13,18 +12,21 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import org.netbeans.spi.wizard.WizardPage;
 
-
-
 /**
+ * A GUI panel used to allow the user to specify words that should be included in the tuple searches
  *
- * @author  Andy Roberts
+ * @author Michael Drayson
+ * @version 1.0
  */
 public class WhitePanel extends WizardPage {
     
     private JFileChooser inChooser;
     private JFileChooser outChooser;
     
-    /** Creates new form SeedPanel */
+     /**
+     * Creates new form WhitePanel using the Wizard framework and initialises the objects on it
+     * Also sets up some default variables to be stored within the wizard frameworks data storage facility
+     */
     public WhitePanel() {
         super("Seeds", "Seeds");
         initComponents();
@@ -33,13 +35,25 @@ public class WhitePanel extends WizardPage {
         putWizardData("whiteWords", " ");
     }
     
-    public static String getDescription() {
-        
+    /**
+     * Returns the description of the BlackPanel GUI form
+     *
+     * @return The description of the BlackPanel form
+     */
+    public static String getDescription() 
+    {
         return "Seeds";
     }
     
-    protected String validateContents (Component component, Object o) {
-                
+    /**
+     * Validates the form to ensure that if the advanced checkbox is selected,  a black list must have been saved
+     *
+     * @param component The component being validated
+     * @param o The object being validated
+     * @return The error presented by the Wizard framework if the condition isn't met
+     */
+    protected String validateContents (Component component, Object o) 
+    {
         if (advancedBox.isSelected())
         {
             if (getWizardData("whitesaved") == "false")
@@ -47,19 +61,27 @@ public class WhitePanel extends WizardPage {
                 return "You must save the white list before continuing... ";
             }
         }
-        
         return null;
     }
     
-    private JFileChooser getInChooser() {
-    
+  /**
+    * Returns a file chooser to be used to load a string from a file
+    *
+    * @return A JFileChooser for opening files
+    */
+    private JFileChooser getInChooser()
+    {
         if (inChooser == null) {
             inChooser = new JFileChooser();
         }
-        
         return inChooser;
     }
-    
+   
+   /**
+    * Returns a file chooser to be used to save a string to a file
+    *
+    * @return A JFileChooser for saving files
+    */
     private JFileChooser getOutChooser() {
     
         if (outChooser == null) {
@@ -69,6 +91,12 @@ public class WhitePanel extends WizardPage {
         return outChooser;
     }
     
+    /**
+     * Method that enables or disables a range of GUI elements, and puts  
+     * data into the wizard.
+     * <p>
+     * Method can be used both ways - to enable and disable features.
+     */
     private void advancedClicked()
     {
          if (advancedBox.isSelected() == false)
@@ -80,9 +108,6 @@ public class WhitePanel extends WizardPage {
             whiteWords.setOpaque(false);
             btnLoad.setEnabled(false);
             btnSave.setEnabled(false);
-            
-            
-            
         }
         
         if (advancedBox.isSelected() == true)
@@ -96,8 +121,7 @@ public class WhitePanel extends WizardPage {
             whiteWords.setEnabled(true);
             whiteWords.setOpaque(true);
             btnLoad.setEnabled(true);
-            btnSave.setEnabled(true);
-            
+            btnSave.setEnabled(true);  
         }
     }
     
@@ -223,10 +247,21 @@ public class WhitePanel extends WizardPage {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+   /**
+     * This method saves a variable to the wizard, ensuring that the validation 
+     * condition isn't met if something has been changed.
+     */
     private void whiteWordsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_whiteWordsFocusLost
            putWizardData("whitesaved", "false");
     }//GEN-LAST:event_whiteWordsFocusLost
 
+   /**
+     * Save white list words to the wizard data holder.
+     * <p>
+     * Method also sets the state to saved in the wizard.
+     *
+     * @param event The event occuring on the saveButton
+     */
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
 // Set the state "saved" in the wizard to true as it's now been saved
         putWizardData("whitesaved", "true");
@@ -239,15 +274,23 @@ public class WhitePanel extends WizardPage {
         {
             putWizardData("whiteWords", whiteWords.getText());
         }
-        
-      
     }//GEN-LAST:event_saveButtonActionPerformed
-
+ 
+   /**
+     * This method toggles the advancedClick method when the advanced box is checked/unchecked 
+     *
+     * @param event The event occuring on the advancedBox
+     */
     private void advancedBoxactionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_advancedBoxactionPerformed
       advancedClicked();
-      
     }//GEN-LAST:event_advancedBoxactionPerformed
 
+    /**
+     * This method attempts to open a JFileChooser in order to save the blacklist to a file
+     *
+     * @param event The event occuring on the saveButton
+     * @exception e If the select file could not be found or I/O error
+     */
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
 
         int returnVal = getOutChooser().showOpenDialog(this);
@@ -262,10 +305,16 @@ public class WhitePanel extends WizardPage {
                 ex.printStackTrace();
             }
         }
-        
-                   putWizardData("whitesaved", "false");
+  
+        putWizardData("whitesaved", "false");
     }//GEN-LAST:event_btnSaveActionPerformed
-
+    
+    /**
+     * This method attempts to open a JFileChooser in order to load a blacklist from a file
+     *
+     * @param event The event occuring on the loadButton
+     * @exception e If the select file could not be found or I/O error
+     */
     private void btnLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadActionPerformed
 
         int returnVal = getInChooser().showOpenDialog(this);
