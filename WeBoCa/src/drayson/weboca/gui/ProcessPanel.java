@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.*;
 import javax.swing.JFileChooser;
@@ -136,6 +137,34 @@ public class ProcessPanel extends WizardPage {
         return new_corp;
     }
     
+    private String getFrequency(String local_corp)
+    {
+        String frequency_list = "";         // Used to store the freq list
+        String old_corp = "";      // The variable used to store whatever corpus was loaded
+        
+        System.out.println("Now generating a frequency list...");
+        
+        String[] entire_corpus = Pattern.compile("\n").split(local_corp);
+        
+        // Convert the array of words into a list
+        List entire_list = Arrays.asList(entire_corpus);
+        
+        // Get a list of the unique words in the corpus:
+        String unique_words = removeUn(local_corp);
+        
+        String[] unique_corpus = Pattern.compile("\n").split(unique_words);
+        System.out.println(unique_corpus);
+        
+        // Iterate over the list of unique words and find the frequency in entire_list for each element
+        for (int i = 0; i < unique_corpus.length; i++) 
+        {
+            // Count the frequency of this unique word in the entire corpus
+            int local_count = Collections.frequency(entire_list, unique_corpus[i]);
+            frequency_list = frequency_list + local_count + " " + unique_corpus[i] + "\n";
+        }
+
+        return orderZA(frequency_list);
+    }
     
     private String orderAZ(String local_corp) {
         String new_corp = "";         // Used to store the processed corpus
@@ -164,8 +193,66 @@ public class ProcessPanel extends WizardPage {
         
     }
     
-    
-    
+    private String orderZA(String local_corp) {
+        String new_corp = "";         // Used to store the processed corpus
+        String old_corp = "";      // The variable used to store whatever corpus was loaded
+        
+        System.out.println("Now sorting corpus Z-A");
+        
+        String[] x = Pattern.compile("\n").split(local_corp);
+        String[] sorted = {};
+        
+        // Convert the array of words into a list
+        List list = Arrays.asList(x);
+
+        
+        // Sort the list so that it is in alphabetical order, with case insensitive.
+        Collections.sort(list, new Comparator() {
+	public int compare(Object o1, Object o2) {
+		
+                String temp1 = (String)o1;
+                String temp2 = (String)o2;
+                
+                int loc1 = temp1.indexOf(" ");
+                int loc2 = temp2.indexOf(" ");
+                
+                Integer v1 = Integer.parseInt(temp1.substring(0, loc1));
+		Integer v2 = Integer.parseInt(temp2.substring(0, loc2)); 
+                
+                if (v1 < v2) {
+			return -1;
+		} else if (v2 < v1) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+});
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                                
+        Collections.reverse(list);
+        
+        // Sort the list and put it back into an array varable called sorted
+        for (int i = 0; i < list.size(); i++) 
+        {
+            //System.out.println("Now adding the word: " + (String)list.get(i) + " to the array!");
+            String temp = (String)list.get(i);
+            new_corp = new_corp + temp.toLowerCase() + "\n";
+        }
+      
+        
+        return new_corp;
+        
+    }
+
     private String removeUnder4(String local_corp) {
         String new_corp = "";                // Used to store the processed corpus
         String    old_corp = "";                // The variable used to store whatever corpus was loaded
@@ -240,9 +327,6 @@ public class ProcessPanel extends WizardPage {
         urlcount = 0;
         return new_corp;
     }
-    
-    
-    
     
     private String removeAlpha(String local_corp) {
         String new_corp = "";                // Used to store the processed corpus
@@ -482,7 +566,7 @@ public class ProcessPanel extends WizardPage {
     private void freqButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_freqButtonActionPerformed
         
         frequency_string = getFrequency(unsaved);
-        
+        System.out.println(frequency_string);
     
     }//GEN-LAST:event_freqButtonActionPerformed
 
@@ -517,6 +601,7 @@ public class ProcessPanel extends WizardPage {
         undoButton.setEnabled(true);
         saveButton.setEnabled(true);
         ununiqueButton.setEnabled(true);
+        freqButton.setEnabled(true);
         
         String local_corp;
         
@@ -563,7 +648,6 @@ public class ProcessPanel extends WizardPage {
         sortButton.setEnabled(true);
         charField.setEnabled(true);
         getCorpusButton.setEnabled(false);
-        freqButton.setEnabled(true);
         
         backup = saveOldCorpus();
         unsaved = backup;

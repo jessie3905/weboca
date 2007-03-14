@@ -182,17 +182,24 @@ public class LoadCorpusPanel extends WizardPage {
 
     private void btnLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadActionPerformed
 
+        
+        System.out.println("Showing the chooser");
         int returnVal = getInChooser().showOpenDialog(this);
     
+        System.out.println("Approved, continuing");
         if(returnVal == JFileChooser.APPROVE_OPTION) {
             try {
+                System.out.println("trying to get the file..");
                 txtCorpus.setText(Utils.loadFile(getInChooser().getSelectedFile()).trim());
             } catch (FileNotFoundException ex) {
+                System.out.println("File not found");
                 ex.printStackTrace();
             } catch (IOException ex) {
+                System.out.println("Other error");
                 ex.printStackTrace();
             }
         }
+        System.out.println("Setting save button");
         saveButton.setEnabled(true);
         putWizardData("CorpusSaved", "False");
     }//GEN-LAST:event_btnLoadActionPerformed
