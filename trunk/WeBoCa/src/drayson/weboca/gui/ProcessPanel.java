@@ -6,8 +6,10 @@
 
 package drayson.weboca.gui;
 
+import drayson.weboca.Utils;
 import java.awt.Component;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
@@ -228,16 +230,7 @@ public class ProcessPanel extends WizardPage {
 		}
 	}
 });
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                                
+                        
         Collections.reverse(list);
         
         // Sort the list and put it back into an array varable called sorted
@@ -332,7 +325,7 @@ public class ProcessPanel extends WizardPage {
         String new_corp = "";                // Used to store the processed corpus
         String old_corp = "";                // The variable used to store whatever corpus was loaded
         
-        CharSequence[] cs = { "!", "\"", "£", "$", "%", "^", "&", "*", "(", ")", "`", "¬", "¦", "\\", "|", ",", "<", ">", ".", "/", "?", ";", ":", "'", "@", "[", "{", "}", "]", "#", "~", "=", "+", "-", "_" };
+        CharSequence[] cs = { " ","“","!", "™", "€", "œ", "˜", "\"", "£", "$", "%", "^", "&", "*", "(", ")", "`", "¬", "¦", "\\", "|", ",", "<", ">", ".", "/", "?", ";", ":", "'", "@", "[", "{", "}", "]", "#", "~", "=", "+", "-", "_" };
         
         System.out.println("Now removing all non-alpha numerical terms.");
         
@@ -377,7 +370,6 @@ public class ProcessPanel extends WizardPage {
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
         jSeparator2 = new javax.swing.JSeparator();
-        viewButton = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -394,9 +386,6 @@ public class ProcessPanel extends WizardPage {
         ununiqueButton = new javax.swing.JButton();
         freqButton = new javax.swing.JButton();
 
-        viewButton.setText("View Current Corpus");
-        viewButton.setEnabled(false);
-
         jLabel1.setText("Please select which processing methods you would like to apply to the corpus.");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 2, 11));
@@ -405,6 +394,11 @@ public class ProcessPanel extends WizardPage {
         saveButton.setFont(new java.awt.Font("Tahoma", 1, 11));
         saveButton.setText("Save New Corpus As...");
         saveButton.setEnabled(false);
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
 
         undoButton.setText("Undo All");
         undoButton.setEnabled(false);
@@ -467,7 +461,7 @@ public class ProcessPanel extends WizardPage {
             }
         });
 
-        freqButton.setText("View Frequency Count");
+        freqButton.setText("Save Frequency Count");
         freqButton.setEnabled(false);
         freqButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -493,12 +487,10 @@ public class ProcessPanel extends WizardPage {
                         .addContainerGap()
                         .add(jSeparator3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE))
                     .add(org.jdesktop.layout.GroupLayout.LEADING, jSeparator2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
+                    .add(layout.createSequentialGroup()
                         .addContainerGap()
-                        .add(viewButton)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(freqButton)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 32, Short.MAX_VALUE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 167, Short.MAX_VALUE)
                         .add(undoButton))
                     .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
@@ -531,7 +523,6 @@ public class ProcessPanel extends WizardPage {
                     .add(layout.createSequentialGroup()
                         .add(11, 11, 11)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                            .add(viewButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 18, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(undoButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 18, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(freqButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 18, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -563,10 +554,38 @@ public class ProcessPanel extends WizardPage {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        
+        int returnVal = getOutChooser().showSaveDialog(this);
+        
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                Utils.saveFile(unsaved, getOutChooser().getSelectedFile());
+                
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_saveButtonActionPerformed
+
     private void freqButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_freqButtonActionPerformed
         
         frequency_string = getFrequency(unsaved);
-        System.out.println(frequency_string);
+        
+        int returnVal = getOutChooser().showSaveDialog(this);
+        
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                Utils.saveFile(frequency_string, getOutChooser().getSelectedFile());
+                
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     
     }//GEN-LAST:event_freqButtonActionPerformed
 
@@ -629,6 +648,7 @@ public class ProcessPanel extends WizardPage {
     private void alphaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alphaButtonActionPerformed
         undoButton.setEnabled(true);
         saveButton.setEnabled(true);
+        urlButton.setEnabled(false);
         
         String local_corp;
         
@@ -641,7 +661,7 @@ public class ProcessPanel extends WizardPage {
     }//GEN-LAST:event_alphaButtonActionPerformed
     
     private void getCorpusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getCorpusButtonActionPerformed
-        viewButton.setEnabled(true);
+
         urlButton.setEnabled(true);
         alphaButton.setEnabled(true);
         under4Button.setEnabled(true);
@@ -685,8 +705,6 @@ public class ProcessPanel extends WizardPage {
     private javax.swing.JButton undoButton;
     private javax.swing.JButton ununiqueButton;
     private javax.swing.JButton urlButton;
-    private javax.swing.JButton viewButton;
-    private javax.swing.JButton viewCorpusButton;
     // End of variables declaration//GEN-END:variables
     
 }

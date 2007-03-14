@@ -13,8 +13,8 @@ public class ModifySteps extends WizardPanelProvider {
     /** Creates a new instance of CatLoversSteps */
     public ModifySteps() {
         super (
-            new String[] { "Load Corpus", "Process Corpus", "Summary" },
-            new String[] { "Load Corpus", "Process Corpus", "Summary" });
+            new String[] { "Load Corpus", "Process Corpus" },
+            new String[] { "Load Corpus", "Process Corpus" });
     }
     
     protected JComponent createPanel(WizardController controller, String id, Map settings) {
@@ -24,10 +24,7 @@ public class ModifySteps extends WizardPanelProvider {
                 
             case 1 :
                 return new ProcessPanel();
-                
-            case 2 :
-                return new SummaryPanel();
-                
+
             default :
                 throw new IllegalArgumentException (id);
         }

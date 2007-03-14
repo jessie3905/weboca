@@ -64,22 +64,50 @@ public class DisclaimerPanel extends WizardPage {
         jLabel4 = new javax.swing.JLabel();
         confirmBox = new javax.swing.JCheckBox();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
 
-        jLabel1.setText("This software is currently in an early stage, and you can ");
+        jLabel1.setText("Thank you for downloading WeBoCa - public release 1.0.  This application has");
         jLabel1.setMaximumSize(new java.awt.Dimension(32767, 32767));
 
-        jLabel2.setText("expect to find lots of issues and other problems in it.");
+        jLabel2.setText("This application has been released under the GNU Lesser Public License");
         jLabel2.setMaximumSize(new java.awt.Dimension(32767, 32767));
 
-        jLabel3.setText("If you insist upon contacting me, I can be reached at the following address:");
+        jLabel3.setText("This application has limited support, so why not have a go at fixing any bugs");
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel4.setText("scs4mpd@comp.leeds.ac.uk");
 
+        confirmBox.setFont(new java.awt.Font("Tahoma", 3, 11));
         confirmBox.setText("Please tick here to confirm you agree to these terms");
         confirmBox.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         confirmBox.setMargin(new java.awt.Insets(0, 0, 0, 0));
 
-        jLabel5.setText("Currently, all rights are reserved.");
+        jLabel5.setText("Before contacting me, you may wish to check the WeBoCa's project home-");
+
+        jLabel6.setText("and can be freely distributed and modified for academic and personal uses.");
+        jLabel6.setMaximumSize(new java.awt.Dimension(32767, 32767));
+
+        jLabel7.setText("you may come across, however, if you would like to contact me you can do");
+
+        jLabel8.setText("so at the following e-mail address:");
+
+        jLabel9.setText("page at ");
+
+        jLabel10.setText("known issues and the latest WeBoCa downloads can be found.");
+
+        jLabel11.setText("been written by Michael Drayson, and was built upon Andy Roberts JBootCat.");
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel12.setText("http://code.google.com/p/weboca");
+
+        jLabel13.setText("where a list of currently ");
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -88,13 +116,26 @@ public class DisclaimerPanel extends WizardPage {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(confirmBox)
+                    .add(jLabel11)
+                    .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel3)
-                    .add(jLabel4)
-                    .add(jLabel5))
-                .addContainerGap(28, Short.MAX_VALUE))
+                    .add(jLabel7)
+                    .add(layout.createSequentialGroup()
+                        .add(jLabel8)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jLabel4))
+                    .add(jLabel5)
+                    .add(layout.createSequentialGroup()
+                        .add(jLabel9)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jLabel12)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jLabel13))
+                    .add(jLabel10))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -102,14 +143,29 @@ public class DisclaimerPanel extends WizardPage {
                 .addContainerGap()
                 .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabel11)
+                .add(15, 15, 15)
                 .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(58, 58, 58)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabel6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(16, 16, 16)
                 .add(jLabel3)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLabel4)
-                .add(60, 60, 60)
+                .add(jLabel7)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jLabel8)
+                    .add(jLabel4))
+                .add(16, 16, 16)
                 .add(jLabel5)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 63, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jLabel9)
+                    .add(jLabel12)
+                    .add(jLabel13))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabel10)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 40, Short.MAX_VALUE)
                 .add(confirmBox)
                 .addContainerGap())
         );
@@ -120,10 +176,18 @@ public class DisclaimerPanel extends WizardPage {
     private javax.swing.JCheckBox confirmBox;
     private javax.swing.ButtonGroup grpBuildType;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     // End of variables declaration//GEN-END:variables
     
 }

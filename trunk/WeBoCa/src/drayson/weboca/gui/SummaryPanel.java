@@ -6,14 +6,23 @@
 
 package drayson.weboca.gui;
 
+import drayson.weboca.Utils;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.regex.Pattern;
+import javax.swing.JFileChooser;
 import org.netbeans.spi.wizard.WizardPage;
+
 
 /**
  *
  * @author  Andy Roberts
  */
 public class SummaryPanel extends WizardPage {
+    
+    private JFileChooser outChooser;
     
     /**
      * Creates new form SummaryPanel
@@ -28,6 +37,14 @@ public class SummaryPanel extends WizardPage {
         updateDetails();
     }
     
+    private JFileChooser getOutChooser() {
+        
+        if (outChooser == null) {
+            outChooser = new JFileChooser();
+        }
+        
+        return outChooser;
+    }
     
     private void updateDetails() {
         
@@ -42,6 +59,59 @@ public class SummaryPanel extends WizardPage {
         lblFilesize.setText((String)this.getWizardData("lblCurrentCorpusSize"));
         
         lblUrlsIncluded.setText((String)this.getWizardData("lblNumUrlsDownloaded"));
+    }
+    
+    
+    private String getUrls()
+    {
+        String corp = "";
+        
+        // Code to get the corpus from the newly created file
+        try {
+                FileReader fr     = new FileReader((String)getWizardData("txtFilename"));
+                BufferedReader br = new BufferedReader(fr);
+                String temp_corp = "";
+                
+                
+                
+                while ((temp_corp = br.readLine()) != null) 
+                {
+                    corp = corp + temp_corp + "\n";
+                }
+            }
+        catch (IOException e) {            
+                // catch possible io errors from readLine()
+                System.out.println("Uh oh, got an IOException error!");
+                e.printStackTrace();
+                return "Internal Program Error - WeBoCa was unable to get the saved corpus";
+            }
+        
+        // Code to remove the URLs from the file and put them into a new string
+        String urls = "";                    // Used to store the URLs
+        
+        CharSequence url = "doc id";
+        
+        System.out.println("Now saving URLs used.");
+        
+        // First we need to split the corpus into an array of strings - one per line (therefore \n as a seperator)
+        String[] x = Pattern.compile("\n").split(corp);
+        String[] cleaned = {};
+        
+        boolean clean = true;
+        boolean exists_an = false;
+        
+        for (int i=0; i<x.length; i++) {
+            if (x[i].contains(url)) {
+                exists_an = true;
+            }
+            
+            if (exists_an == true) {
+                // Add the clean word to the corpus
+                urls = urls + x[i] + "\n";
+            }
+            exists_an = false;
+        }
+        return urls;
     }
     
     /** This method is called from within the constructor to
@@ -62,7 +132,7 @@ public class SummaryPanel extends WizardPage {
         lblUrlsIncluded = new javax.swing.JLabel();
         viewCorpusButton = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        viewCorpusButton1 = new javax.swing.JButton();
+        saveURLsButton = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         lblSearchEngineUsed = new javax.swing.JLabel();
 
@@ -96,7 +166,12 @@ public class SummaryPanel extends WizardPage {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
         jLabel7.setText("Additional Options");
 
-        viewCorpusButton1.setText("Save URLs to text file");
+        saveURLsButton.setText("Save URLs used to text file");
+        saveURLsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveURLsButtonActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Search Engine used:");
 
@@ -136,8 +211,9 @@ public class SummaryPanel extends WizardPage {
                             .add(layout.createSequentialGroup()
                                 .add(10, 10, 10)
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(viewCorpusButton)
-                                    .add(viewCorpusButton1))))))
+                                    .add(saveURLsButton)
+                                    .add(viewCorpusButton))))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)))
                 .addContainerGap(161, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -172,10 +248,28 @@ public class SummaryPanel extends WizardPage {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(viewCorpusButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 18, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(viewCorpusButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 18, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(saveURLsButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 18, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(47, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void saveURLsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveURLsButtonActionPerformed
+        
+        int returnVal = getOutChooser().showSaveDialog(this);
+        
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                Utils.saveFile(getUrls(), getOutChooser().getSelectedFile());
+                
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        
+        
+    }//GEN-LAST:event_saveURLsButtonActionPerformed
 
     private void viewCorpusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCorpusButtonActionPerformed
         try 
@@ -203,8 +297,8 @@ public class SummaryPanel extends WizardPage {
     private javax.swing.JLabel lblNumWords;
     private javax.swing.JLabel lblSearchEngineUsed;
     private javax.swing.JLabel lblUrlsIncluded;
+    private javax.swing.JButton saveURLsButton;
     private javax.swing.JButton viewCorpusButton;
-    private javax.swing.JButton viewCorpusButton1;
     // End of variables declaration//GEN-END:variables
     
 }
