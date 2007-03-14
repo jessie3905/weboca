@@ -29,12 +29,10 @@
                       <Component id="jSeparator3" pref="381" max="32767" attributes="0"/>
                   </Group>
                   <Component id="jSeparator2" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="viewButton" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="freqButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="32" max="32767" attributes="0"/>
+                      <EmptySpace pref="167" max="32767" attributes="0"/>
                       <Component id="undoButton" min="-2" max="-2" attributes="1"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -75,7 +73,6 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="11" pref="11" max="11" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="viewButton" alignment="3" min="-2" pref="18" max="-2" attributes="0"/>
                           <Component id="undoButton" alignment="3" min="-2" pref="18" max="-2" attributes="0"/>
                           <Component id="freqButton" alignment="3" min="-2" pref="18" max="-2" attributes="0"/>
                       </Group>
@@ -116,12 +113,6 @@
   <SubComponents>
     <Component class="javax.swing.JSeparator" name="jSeparator2">
     </Component>
-    <Component class="javax.swing.JButton" name="viewButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="View Current Corpus"/>
-        <Property name="enabled" type="boolean" value="false"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
@@ -145,6 +136,9 @@
         <Property name="text" type="java.lang.String" value="Save New Corpus As..."/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="undoButton">
       <Properties>
@@ -226,7 +220,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="freqButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="View Frequency Count"/>
+        <Property name="text" type="java.lang.String" value="Save Frequency Count"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>

@@ -9,13 +9,14 @@ package drayson.weboca.gui;
 import drayson.weboca.TupleBuilder;
 import drayson.weboca.Utils;
 import java.awt.Component;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
-import org.netbeans.spi.wizard.Wizard;
 import org.netbeans.spi.wizard.WizardPage;
 
 /**
@@ -23,6 +24,9 @@ import org.netbeans.spi.wizard.WizardPage;
  * @author Andy Roberts
  */
 public class TuplePanel extends WizardPage {
+    
+    private JFileChooser inChooser;
+    private JFileChooser outChooser;
     
     /** Creates new form TuplePanel */
     public TuplePanel() {
@@ -43,6 +47,27 @@ public class TuplePanel extends WizardPage {
             return null;
         }
     }
+    
+    
+    private JFileChooser getInChooser() {
+        
+        if (inChooser == null) {
+            inChooser = new JFileChooser();
+        }
+        
+        return inChooser;
+    }
+    
+    private JFileChooser getOutChooser() {
+        
+        if (outChooser == null) {
+            outChooser = new JFileChooser();
+        }
+        
+        return outChooser;
+    }
+    
+    
     
     /** This method is called from within the constructor to
      * initialize the form.
@@ -85,8 +110,18 @@ public class TuplePanel extends WizardPage {
         spnNumTuples.setModel(new SpinnerNumberModel(value, min, max, step));
 
         btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         btnLoad.setText("Load");
+        btnLoad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoadActionPerformed(evt);
+            }
+        });
 
         txtTuples.setColumns(20);
         txtTuples.setRows(5);
@@ -100,7 +135,7 @@ public class TuplePanel extends WizardPage {
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
                     .add(layout.createSequentialGroup()
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jLabel2)
@@ -138,6 +173,35 @@ public class TuplePanel extends WizardPage {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadActionPerformed
+        int returnVal = getInChooser().showOpenDialog(this);
+    
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                txtTuples.setText(Utils.loadFile(getInChooser().getSelectedFile()).trim());
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnLoadActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        int returnVal = getOutChooser().showSaveDialog(this);
+        
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                Utils.saveFile(txtTuples.getText(), getOutChooser().getSelectedFile());
+                
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateActionPerformed
 
