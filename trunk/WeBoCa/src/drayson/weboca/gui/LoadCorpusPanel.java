@@ -6,9 +6,10 @@
 
 package drayson.weboca.gui;
 
-import drayson.weboca.Utils;
 import java.awt.Component;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.JFileChooser;
 import org.netbeans.spi.wizard.WizardPage;
@@ -190,7 +191,19 @@ public class LoadCorpusPanel extends WizardPage {
         if(returnVal == JFileChooser.APPROVE_OPTION) {
             try {
                 System.out.println("trying to get the file..");
-                txtCorpus.setText(Utils.loadFile(getInChooser().getSelectedFile()).trim());
+                StringBuffer x = new StringBuffer();
+                
+                FileReader fr = new FileReader(getInChooser().getSelectedFile()); 
+                BufferedReader br = new BufferedReader(fr); 
+                
+                String temp;
+                
+                while ((temp = br.readLine()) != null)
+                {
+                    x.append(temp).append("\n");
+                }
+             
+                txtCorpus.setText(x.toString());
             } catch (FileNotFoundException ex) {
                 System.out.println("File not found");
                 ex.printStackTrace();

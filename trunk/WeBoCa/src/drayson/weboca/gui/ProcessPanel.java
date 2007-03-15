@@ -82,6 +82,7 @@ public class ProcessPanel extends WizardPage {
     
     private String saveOldCorpus() {
         String old_corp = "";
+        StringBuffer x = new StringBuffer();
         
         if (getWizardData("LoadedCorpus") != " ") {
             old_corp = (String)getWizardData("LoadedCorpus");
@@ -90,15 +91,19 @@ public class ProcessPanel extends WizardPage {
                 FileReader fr     = new FileReader((String)getWizardData("txtFilename"));
                 BufferedReader br = new BufferedReader(fr);
                 String temp_corp = "";
+
                 
-                while ((temp_corp = br.readLine()) != null) {
-                    old_corp = old_corp + temp_corp + "\n";
+                while ((temp_corp = br.readLine()) != null) 
+                {
+                    x.append(temp_corp).append("\n");
                 }
             } catch (IOException e) {
                 // catch possible io errors from readLine()
                 System.out.println("Uh oh, got an IOException error!");
                 e.printStackTrace();
             }
+            
+            old_corp = x.toString();
         }
         
         System.out.println("Backup corpus has been saved.");
@@ -112,6 +117,7 @@ public class ProcessPanel extends WizardPage {
         
         String new_corp = "";         // Used to store the processed corpus
         String old_corp = "";      // The variable used to store whatever corpus was loaded
+        StringBuffer sb = new StringBuffer();
         
         System.out.println("Now removing ununique terms from the corpus");
         
@@ -122,27 +128,25 @@ public class ProcessPanel extends WizardPage {
         {
             if (i == x.length-1)
             {
-                System.out.println("Inside the last condition (processing " + x[i] + ")");
-                new_corp = new_corp + x[i];
+                sb.append(x[i]).append("\n");
             }
             else 
             {
                 if (!x[i].matches(x[i+1]))
                 {
-                    System.out.println("Inside the else condition (processing " + x[i] + ")");
-                    System.out.println(x[i] + " is not the same as " + x[i+1]);
-                    new_corp = new_corp + x[i] + "\n";
+                    sb.append(x[i]).append("\n");
                 }
             }
         }
         
-        return new_corp;
+        return sb.toString();
     }
     
     private String getFrequency(String local_corp)
     {
         String frequency_list = "";         // Used to store the freq list
         String old_corp = "";      // The variable used to store whatever corpus was loaded
+        StringBuffer sb = new StringBuffer();
         
         System.out.println("Now generating a frequency list...");
         
@@ -162,15 +166,18 @@ public class ProcessPanel extends WizardPage {
         {
             // Count the frequency of this unique word in the entire corpus
             int local_count = Collections.frequency(entire_list, unique_corpus[i]);
-            frequency_list = frequency_list + local_count + " " + unique_corpus[i] + "\n";
+            sb.append(local_count).append(" ").append(unique_corpus[i]).append("\n");
         }
-
-        return orderZA(frequency_list);
+        
+        String ret = orderZA(sb.toString());
+        
+        return ret;
     }
     
     private String orderAZ(String local_corp) {
         String new_corp = "";         // Used to store the processed corpus
         String old_corp = "";      // The variable used to store whatever corpus was loaded
+        StringBuffer sb = new StringBuffer();
         
         System.out.println("Now sorting corpus A-Z");
         
@@ -188,16 +195,17 @@ public class ProcessPanel extends WizardPage {
         {
             //System.out.println("Now adding the word: " + (String)list.get(i) + " to the array!");
             String temp = (String)list.get(i);
-            new_corp = new_corp + temp.toLowerCase() + "\n";
+            sb.append(temp.toLowerCase()).append("\n");
         }
         
-        return new_corp;
+        return sb.toString();
         
     }
     
     private String orderZA(String local_corp) {
         String new_corp = "";         // Used to store the processed corpus
         String old_corp = "";      // The variable used to store whatever corpus was loaded
+        StringBuffer sb = new StringBuffer();
         
         System.out.println("Now sorting corpus Z-A");
         
@@ -238,17 +246,19 @@ public class ProcessPanel extends WizardPage {
         {
             //System.out.println("Now adding the word: " + (String)list.get(i) + " to the array!");
             String temp = (String)list.get(i);
-            new_corp = new_corp + temp.toLowerCase() + "\n";
+            sb.append(temp.toLowerCase()).append("\n");
         }
       
         
-        return new_corp;
+        return sb.toString();
         
     }
 
     private String removeUnder4(String local_corp) {
         String new_corp = "";                // Used to store the processed corpus
         String    old_corp = "";                // The variable used to store whatever corpus was loaded
+        StringBuffer sb = new StringBuffer();
+        
         int count = 0;
         int charfield = 3;
         try{
@@ -268,22 +278,22 @@ public class ProcessPanel extends WizardPage {
             
             if (x[i].length() < charfield) {
                 count++;
-                //System.out.println("Word: " + x[i] + " is shorter than " + charfield);
                 valid = false;
             }
             
             if (valid) {
-                new_corp = new_corp + x[i] + "\n";
+                sb.append(x[i]).append("\n");
             }
         }
         System.out.println("Successfully removed " + count + " words under the length of " + charfield + " from the corpus!");
         count = 0;
-        return new_corp;
+        return sb.toString();
     }
     
     private String removeURLs(String local_corp) {
         String new_corp = "";                // Used to store the processed corpus
         String old_corp = "";                // The variable used to store whatever corpus was loaded
+        StringBuffer sb = new StringBuffer();
         
         CharSequence url = "doc id";
         
@@ -300,31 +310,26 @@ public class ProcessPanel extends WizardPage {
             if (x[i].contains(url)) {
                 urlcount++;
                 exists_an = true;
-                
-                // Now need to stop it processing this word any further if it's already found to be unclean
-                //continue;
             }
             
             if (exists_an == false) {
                 // Add the clean word to the corpus
-                new_corp = new_corp + x[i] + "\n";
+                sb.append(x[i]).append("\n");
             }
             exists_an = false;
         }
         
         System.out.println("Successfully removed all URLs.");
-        
-        // The corpus has now been loaded into the old local variable
-        //System.out.println(new_corp);
         System.out.println("Removed " + urlcount + " URLs from the corpus.");
         urlcount = 0;
-        return new_corp;
+        return sb.toString();
     }
     
     private String removeAlpha(String local_corp) {
         String new_corp = "";                // Used to store the processed corpus
         String old_corp = "";                // The variable used to store whatever corpus was loaded
-        
+        StringBuffer sb = new StringBuffer();
+                
         CharSequence[] cs = { " ","“","!", "™", "€", "œ", "˜", "\"", "£", "$", "%", "^", "&", "*", "(", ")", "`", "¬", "¦", "\\", "|", ",", "<", ">", ".", "/", "?", ";", ":", "'", "@", "[", "{", "}", "]", "#", "~", "=", "+", "-", "_" };
         
         System.out.println("Now removing all non-alpha numerical terms.");
@@ -349,7 +354,7 @@ public class ProcessPanel extends WizardPage {
             }
             if (exists_an == false) {
                 // Add the clean word to the corpus
-                new_corp = new_corp + x[i] + "\n";
+                sb.append(x[i]).append("\n");
             }
             exists_an = false;
         }
@@ -358,7 +363,7 @@ public class ProcessPanel extends WizardPage {
         // The corpus has now been loaded into the old local variable
         System.out.println("Removed " + nacount + " non alpha-numerics from the corpus.");
         nacount = 0;
-        return new_corp;
+        return sb.toString();
     }
    
     

@@ -219,8 +219,6 @@ public class WelcomePanel extends WizardPage {
         System.out.println((String)getWizardData("userType"));
     }//GEN-LAST:event_rdoSimpleActionPerformed
  
-   
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup grpBuildType;
     private javax.swing.JLabel jLabel1;
