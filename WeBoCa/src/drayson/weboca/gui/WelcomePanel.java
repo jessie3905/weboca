@@ -110,7 +110,7 @@ public class WelcomePanel extends WizardPage {
         rdoAdvanced = new javax.swing.JRadioButton();
         rdoModify = new javax.swing.JRadioButton();
 
-        jLabel1.setText("Welcome to WeBoCa v0.1..");
+        jLabel1.setText("Welcome to WeBoCa v1.2...");
 
         jLabel2.setText("I would like to...  ");
 
