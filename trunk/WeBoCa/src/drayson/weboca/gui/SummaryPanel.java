@@ -65,6 +65,7 @@ public class SummaryPanel extends WizardPage {
     private String getUrls()
     {
         String corp = "";
+        StringBuffer sb = new StringBuffer();
         
         // Code to get the corpus from the newly created file
         try {
@@ -76,7 +77,7 @@ public class SummaryPanel extends WizardPage {
                 
                 while ((temp_corp = br.readLine()) != null) 
                 {
-                    corp = corp + temp_corp + "\n";
+                    sb.append(temp_corp).append("\n");
                 }
             }
         catch (IOException e) {            
@@ -85,6 +86,8 @@ public class SummaryPanel extends WizardPage {
                 e.printStackTrace();
                 return "Internal Program Error - WeBoCa was unable to get the saved corpus";
             }
+        
+        corp = sb.toString();
         
         // Code to remove the URLs from the file and put them into a new string
         String urls = "";                    // Used to store the URLs
@@ -99,6 +102,7 @@ public class SummaryPanel extends WizardPage {
         
         boolean clean = true;
         boolean exists_an = false;
+        StringBuffer sbtwo = new StringBuffer();
         
         for (int i=0; i<x.length; i++) {
             if (x[i].contains(url)) {
@@ -107,10 +111,12 @@ public class SummaryPanel extends WizardPage {
             
             if (exists_an == true) {
                 // Add the clean word to the corpus
-                urls = urls + x[i] + "\n";
+                sbtwo.append(x[i]).append("\n");
             }
             exists_an = false;
         }
+        urls = sbtwo.toString();
+        
         return urls;
     }
     
@@ -211,9 +217,8 @@ public class SummaryPanel extends WizardPage {
                             .add(layout.createSequentialGroup()
                                 .add(10, 10, 10)
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(saveURLsButton)
-                                    .add(viewCorpusButton))))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)))
+                                    .add(viewCorpusButton)
+                                    .add(saveURLsButton))))))
                 .addContainerGap(161, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
